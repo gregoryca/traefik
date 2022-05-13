@@ -1,0 +1,60 @@
+version: "3.3"
+
+volumes:
+  traefik-ssl-certs:
+    driver: local
+
+services:
+  traefik:
+    image: "traefik:latest"
+    container_name: traefik.rproxy
+    restart: always
+    command:
+      # Enable a http challenge named "myhttpchallenge" and "mytlschallange"
+      # - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      # The email to provide to let's encrypt
+      - "--certificatesresolvers.mytlschallenge.acme.email=aquiles.craane@gmail.com"
+      # Tell it to use our predefined entrypoint named "web"
+      # - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web-"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge.entrypoint=web"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+      
+    ports:
+      - "80:80"
+      - "443:443"
+      - "853:853"
+      - "51820:51820"
+      - "8080:8080"
+    
+    expose:
+      - 8080
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/srv/letsencrypt/:/srv/letsencrypt"
+      - "/letsencrypt/:/letsencrypt"
+      - "traefik-ssl-certs:/ssl-certs"
+      - "./:/etc/traefik/"
+
+    labels:
+
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.cloud-migrations.nl`)"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=production"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
+      - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      # - "traefik.http.middlewares.traefik-auth.basicauth.users=Laliloe4life:$$apr1$$8EVjn/nj$$GiLUZqcbueTFeD23SuB6x0"
+
+      - com.centurylinklabs.watchtower.enable=true
+
+    networks: 
+      - web-secure
+
+networks: 
+  web-secure:
+    external: true
