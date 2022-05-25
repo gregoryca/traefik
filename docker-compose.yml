@@ -47,14 +47,15 @@ services:
       - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      # - "traefik.http.middlewares.traefik-auth.basicauth.users=Laliloe4life:$$apr1$$8EVjn/nj$$GiLUZqcbueTFeD23SuB6x0"
 
       - com.centurylinklabs.watchtower.enable=true
 
     networks: 
       - web-secure
+      - web
 
 networks: 
   web-secure:
+    external: true
+  web:
     external: true

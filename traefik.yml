@@ -25,12 +25,13 @@ api:
 # ---
 entryPoints:
   web:
-    address: :80
+    address: ":80"
     http:
       redirections:
-        entryPoint:
+        entrypoint:
           to: web-secure
           scheme: https
+
   web-secure:
     address: ":443"
   dnsovertls:
