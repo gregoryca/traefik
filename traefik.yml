@@ -25,13 +25,7 @@ api:
 # ---
 entryPoints:
   web:
-    address: ":80"
-    http:
-      redirections:
-        entrypoint:
-          to: web-secure
-          scheme: https
-
+    address: :80
   web-secure:
     address: ":443"
   dnsovertls:
@@ -40,8 +34,6 @@ entryPoints:
     address: ":53/udp"
   dns:
     address: ":53/tcp"
-  # vpn:
-  #   address: "51820"
 
 # Certificates configuration
 # ---
@@ -64,14 +56,6 @@ certificatesResolvers:
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
         entryPoint: web
-
-  # mytlschallenge:
-  #   acme:
-  #     email: aquiles.craane@gmail.com  # TODO: Change this to your email
-  #     storage: /letsencrypt/acme.json
-  #     tlsChallenge:
-  #       entryPoint: web
-
 
 # Provider Configuration
 # ---

@@ -10,15 +10,14 @@ services:
     container_name: traefik.rproxy
     restart: always
     command:
-      # Enable a http challenge named "myhttpchallenge" and "mytlschallange"
-      # - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
-      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      # Enable a http challenge named "production" and "development"
+      - "--certificatesresolvers.production.acme.tlschallenge=true"
+      - "--certificatesresolvers.development.acme.tlschallenge=true"
       # The email to provide to let's encrypt
-      - "--certificatesresolvers.mytlschallenge.acme.email=aquiles.craane@gmail.com"
+      - "--certificatesresolvers.production.acme.email=aquiles.craane@gmail.com"
       # Tell it to use our predefined entrypoint named "web"
-      # - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web-"
-      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge.entrypoint=web"
-      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.production.acme.tlschallenge.entrypoint=web"
+      - "--certificatesresolvers.production.acme.storage=/letsencrypt/acme.json"
       
     ports:
       - "80:80"
@@ -26,9 +25,6 @@ services:
       - "853:853"
       - "51820:51820"
       - "8080:8080"
-    
-    expose:
-      - 8080
 
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -38,7 +34,6 @@ services:
       - "./:/etc/traefik/"
 
     labels:
-
       - "traefik.enable=true"
 
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.cloud-migrations.nl`)"
@@ -47,6 +42,8 @@ services:
       - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.service=api@internal"
+      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      # - "traefik.http.middlewares.traefik-auth.basicauth.users=Laliloe4life:$$apr1$$8EVjn/nj$$GiLUZqcbueTFeD23SuB6x0"
 
       - com.centurylinklabs.watchtower.enable=true
 
