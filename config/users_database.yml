@@ -1,0 +1,18 @@
+---
+###############################################################
+#                         Users Database                      #
+###############################################################
+
+# This file can be used if you do not have an LDAP set up.
+
+# List of users
+users:
+  gcraane:
+    displayname: "Gregory Craane"
+    # Password is authelia
+    password: "$argon2id$v=19$m=65536,t=3,p=4$WEkxNVI2QTVhcHdpWURsbA$7FePpdNYczbj6JRnQIJOpsU4Hu/46+WtFMpAWDnoqoY"  # yamllint disable-line rule:line-length
+    email: aquiles.craane@cloud-migrations.nl
+    groups:
+      - admins
+      - dev
+...

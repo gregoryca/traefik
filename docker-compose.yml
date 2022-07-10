@@ -23,14 +23,11 @@ services:
       - "80:80"
       - "443:443"
       - "853:853"
-      - "51820:51820"
-      - "8080:8080"
 
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/srv/letsencrypt/:/srv/letsencrypt"
-      - "/letsencrypt/:/letsencrypt"
-      - "traefik-ssl-certs:/ssl-certs"
+      - "./letsencrypt/:/letsencrypt"
+      - "./traefik-ssl-certs:/ssl-certs"
       - "./:/etc/traefik/"
 
     labels:
@@ -42,14 +39,39 @@ services:
       - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-      # - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      # - "traefik.http.middlewares.traefik-auth.basicauth.users=Laliloe4life:$$apr1$$8EVjn/nj$$GiLUZqcbueTFeD23SuB6x0"
+      # - "traefik.http.routers.traefik-secure.middlewares=authelia@docker"
 
       - com.centurylinklabs.watchtower.enable=true
-
-    networks: 
+    networks:
       - web-secure
       - web
+
+  authelia:
+    image: authelia/authelia:latest
+    container_name: authelia_2FA
+    volumes:
+      - ./config:/config
+    networks:
+      - web-secure
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.authelia-secure.rule=Host(`auth.cloud-migrations.nl`)'
+      - 'traefik.http.routers.authelia-secure.entrypoints=web-secure'
+      - 'traefik.http.routers.authelia-secure.tls=true'
+      - 'traefik.http.routers.authelia-secure.tls.certresolver=production'
+
+      - 'traefik.http.middlewares.authelia-secure.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.cloud-migrations.nl'  # yamllint disable-line rule:line-length
+      - 'traefik.http.middlewares.authelia-secure.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia-secure.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'  # yamllint disable-line rule:line-length
+      
+      - "traefik.http.services.authelia-secure.loadbalancer.server.port=9091" #port to the webservice
+    expose:
+      - 9091
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    environment:
+      - TZ=Europe/Amsterdam
 
 networks: 
   web-secure:
