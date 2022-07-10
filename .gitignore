@@ -1,1 +1,2 @@
 traefik-ssl-certs/acme.json
+config/db.sqlite3
