@@ -39,7 +39,11 @@ services:
       - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.service=api@internal"
-      # - "traefik.http.routers.traefik-secure.middlewares=authelia@docker"
+      - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
+
+      # - 'traefik.http.middlewares.authelia-secure.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.cloud-migrations.nl'  # yamllint disable-line rule:line-length
+      # - 'traefik.http.middlewares.authelia-secure.forwardauth.trustForwardHeader=true'
+      # - 'traefik.http.middlewares.authelia-secure.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'  # yamllint disable-line rule:line-length
 
       - com.centurylinklabs.watchtower.enable=true
     networks:

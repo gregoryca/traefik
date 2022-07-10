@@ -47,112 +47,112 @@ tls:
         - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
         - "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
         - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
-web:
-  middlewares:
-    authelia:
-      forwardAuth:
-        address: https://authelia:9091/api/verify?rd=https%3A%2F%2Fauth.example.com%2F
-        trustForwardHeader: true
-        authResponseHeaders:
-          - "Remote-User"
-          - "Remote-Groups"
-          - "Remote-Email"
-          - "Remote-Name"
-        tls:
-          ca: /certificates/ca.public.crt
-          cert: /certificates/traefik.public.crt
-          key: /certificates/traefik.private.pem
-    authelia-basic:
-      forwardAuth:
-        address: https://authelia:9091/api/verify?auth=basic
-        trustForwardHeader: true
-        authResponseHeaders:
-          - "Remote-User"
-          - "Remote-Groups"
-          - "Remote-Email"
-          - "Remote-Name"
-        tls:
-          ca: /certificates/ca.public.crt
-          cert: /certificates/traefik.public.crt
-          key: /certificates/traefik.private.pem
-  routers:
-    traefik-secure:
-      rule: Host(`traefik.cloud-migrations.nl`)
-      entryPoints: web-secure
-      service: api@internal
-      middlewares:
-        - authelia@file
-      tls:
-        options: modern@file
-        certResolver: default
-        domains:
-          - main: "example.com"
-            sans:
-              - "*.example.com"
-    # whoami:
-    #   rule: Host(`whoami.example.com`)
-    #   entryPoints: websecure
-    #   service: whoami-net@docker
-    #   middlewares:
-    #     - authelia@file
-    #   tls:
-    #     options: modern@file
-    #     certResolver: default
-    #     domains:
-    #       - main: "example.com"
-    #         sans:
-    #           - "*.example.com"
-    import:
-      rule: Host(`import.example.com`)
-      entryPoints: web-secure
-      # service: nextcloud-net@docker
-      middlewares:
-        - authelia@file
-      tls:
-        options: modern@file
-        certResolver: default
-        domains:
-          - main: "example.com"
-            sans:
-              - "*.example.com"
-    # heimdall:
-    #   rule: Host(`heimdall.example.com`)
-    #   entryPoints: websecure
-    #   service: heimdall-net@docker
-    #   middlewares:
-    #     - authelia-basic@file
-    #   tls:
-    #     options: modern@file
-    #     certResolver: default
-    #     domains:
-    #       - main: "example.com"
-    #         sans:
-    #           - "*.example.com"
-    authelia:
-      rule: Host(`auth.cloud-migrations.nl`)
-      entryPoints: web-secure
-      service: authelia@file
-      tls:
-        options: modern@file
-        certResolver: default
-        domains:
-          - main: "auth.cloud-migrations.nl"
-            sans:
-              - "*.auth.cloud-migrations.nl"
-  services:
-    authelia:
-      loadBalancer:
-        servers:
-          - url: https://authelia:9091/
-        serversTransport: autheliaMutualTLS
-  serversTransports:
-    autheliaMutualTLS:
-      certificates:
-        - certFile: /certificates/traefik.public.crt
-          keyFile: /certificates/traefik.private.pem
-      rootCAs:
-        - /certificates/ca.public.crt
-...
+# web-secure:
+#   middlewares:
+#     authelia:
+#       forwardAuth:
+#         address: https://authelia:9091/api/verify?rd=https%3A%2F%2Fauth.example.com%2F
+#         trustForwardHeader: true
+#         authResponseHeaders:
+#           - "Remote-User"
+#           - "Remote-Groups"
+#           - "Remote-Email"
+#           - "Remote-Name"
+#         tls:
+#           ca: /certificates/ca.public.crt
+#           cert: /certificates/traefik.public.crt
+#           key: /certificates/traefik.private.pem
+#     authelia-basic:
+#       forwardAuth:
+#         address: https://authelia:9091/api/verify?auth=basic
+#         trustForwardHeader: true
+#         authResponseHeaders:
+#           - "Remote-User"
+#           - "Remote-Groups"
+#           - "Remote-Email"
+#           - "Remote-Name"
+#         tls:
+#           ca: /certificates/ca.public.crt
+#           cert: /certificates/traefik.public.crt
+#           key: /certificates/traefik.private.pem
+#   routers:
+#     traefik-secure:
+#       rule: Host(`traefik.cloud-migrations.nl`)
+#       entryPoints: web-secure
+#       service: api@internal
+#       middlewares:
+#         - authelia@file
+#       tls:
+#         options: modern@file
+#         certResolver: default
+#         domains:
+#           - main: "example.com"
+#             sans:
+#               - "*.example.com"
+#     # whoami:
+#     #   rule: Host(`whoami.example.com`)
+#     #   entryPoints: websecure
+#     #   service: whoami-net@docker
+#     #   middlewares:
+#     #     - authelia@file
+#     #   tls:
+#     #     options: modern@file
+#     #     certResolver: default
+#     #     domains:
+#     #       - main: "example.com"
+#     #         sans:
+#     #           - "*.example.com"
+#     import:
+#       rule: Host(`import.example.com`)
+#       entryPoints: web-secure
+#       # service: nextcloud-net@docker
+#       middlewares:
+#         - authelia@file
+#       tls:
+#         options: modern@file
+#         certResolver: default
+#         domains:
+#           - main: "example.com"
+#             sans:
+#               - "*.example.com"
+#     # heimdall:
+#     #   rule: Host(`heimdall.example.com`)
+#     #   entryPoints: websecure
+#     #   service: heimdall-net@docker
+#     #   middlewares:
+#     #     - authelia-basic@file
+#     #   tls:
+#     #     options: modern@file
+#     #     certResolver: default
+#     #     domains:
+#     #       - main: "example.com"
+#     #         sans:
+#     #           - "*.example.com"
+#     authelia:
+#       rule: Host(`auth.cloud-migrations.nl`)
+#       entryPoints: web-secure
+#       service: authelia@file
+#       tls:
+#         options: modern@file
+#         certResolver: default
+#         domains:
+#           - main: "auth.cloud-migrations.nl"
+#             sans:
+#               - "*.auth.cloud-migrations.nl"
+#   services:
+#     authelia:
+#       loadBalancer:
+#         servers:
+#           - url: https://authelia:9091/
+#         serversTransport: autheliaMutualTLS
+#   serversTransports:
+#     autheliaMutualTLS:
+#       certificates:
+#         - certFile: /traefik-ssl-certs/traefik.public.crt
+#           keyFile: /traefik-ssl-certs/traefik.private.pem
+#       rootCAs:
+#         - /traefik-ssl-certs/ca.public.crt
+# ...
 
 # Certificates configuration
 # ---
