@@ -8,7 +8,7 @@ services:
   traefik:
     image: "traefik:latest"
     container_name: traefik.rproxy
-    restart: always
+    restart: always 
     command:
       # Enable a http challenge named "production" and "development"
       - "--certificatesresolvers.production.acme.tlschallenge=true"
@@ -16,8 +16,8 @@ services:
       # The email to provide to let's encrypt
       - "--certificatesresolvers.production.acme.email=aquiles.craane@gmail.com"
       # Tell it to use our predefined entrypoint named "web"
-      - "--certificatesresolvers.production.acme.tlschallenge.entrypoint=web"
-      - "--certificatesresolvers.production.acme.storage=/letsencrypt/acme.json"
+      # - "--certificatesresolvers.production.acme.httpChallenge.entrypoint=web"
+      # - "--certificatesresolvers.production.acme.storage=/ssl-certs/acme.json"
       
     ports:
       - "80:80"
@@ -26,9 +26,9 @@ services:
 
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./letsencrypt/:/letsencrypt"
       - "./traefik-ssl-certs:/ssl-certs"
-      - "./:/etc/traefik/"
+      - "./configurations:/configurations"
+      - "./:/etc/traefik/"      
 
     labels:
       - "traefik.enable=true"
@@ -41,11 +41,6 @@ services:
       - "traefik.http.routers.traefik-secure.service=api@internal"
       - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
 
-      # - 'traefik.http.middlewares.authelia-secure.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.cloud-migrations.nl'  # yamllint disable-line rule:line-length
-      # - 'traefik.http.middlewares.authelia-secure.forwardauth.trustForwardHeader=true'
-      # - 'traefik.http.middlewares.authelia-secure.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'  # yamllint disable-line rule:line-length
-
-      - com.centurylinklabs.watchtower.enable=true
     networks:
       - web-secure
       - web

@@ -1,0 +1,14 @@
+http:
+  routers:
+    router1:
+      rule: Host(`192.168.1.141`)
+      entryPoints:
+        - web-secure
+      services:
+        - opencart-service
+
+  services:
+    opencart-service:
+      loadBalancer:
+        servers:
+          - url: https://opencartdev.local
