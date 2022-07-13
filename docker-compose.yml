@@ -9,15 +9,6 @@ services:
     image: "traefik:latest"
     container_name: traefik.rproxy
     restart: always 
-    command:
-      # Enable a http challenge named "production" and "development"
-      - "--certificatesresolvers.production.acme.tlschallenge=true"
-      - "--certificatesresolvers.development.acme.tlschallenge=true"
-      # The email to provide to let's encrypt
-      - "--certificatesresolvers.production.acme.email=aquiles.craane@gmail.com"
-      # Tell it to use our predefined entrypoint named "web"
-      # - "--certificatesresolvers.production.acme.httpChallenge.entrypoint=web"
-      # - "--certificatesresolvers.production.acme.storage=/ssl-certs/acme.json"
       
     ports:
       - "80:80"
@@ -27,8 +18,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik-ssl-certs:/ssl-certs"
-      - "./configurations:/configurations"
-      - "./:/etc/traefik/"      
+      - "./configurations/:/configurations"
+      - "./configurations/:/etc/traefik/"      
 
     labels:
       - "traefik.enable=true"
@@ -44,33 +35,6 @@ services:
     networks:
       - web-secure
       - web
-
-  authelia:
-    image: authelia/authelia:latest
-    container_name: authelia_2FA
-    volumes:
-      - ./config:/config
-    networks:
-      - web-secure
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.authelia-secure.rule=Host(`auth.cloud-migrations.nl`)'
-      - 'traefik.http.routers.authelia-secure.entrypoints=web-secure'
-      - 'traefik.http.routers.authelia-secure.tls=true'
-      - 'traefik.http.routers.authelia-secure.tls.certresolver=production'
-
-      - 'traefik.http.middlewares.authelia-secure.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.cloud-migrations.nl'  # yamllint disable-line rule:line-length
-      - 'traefik.http.middlewares.authelia-secure.forwardauth.trustForwardHeader=true'
-      - 'traefik.http.middlewares.authelia-secure.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'  # yamllint disable-line rule:line-length
-      
-      - "traefik.http.services.authelia-secure.loadbalancer.server.port=9091" #port to the webservice
-    expose:
-      - 9091
-    restart: unless-stopped
-    healthcheck:
-      disable: true
-    environment:
-      - TZ=Europe/Amsterdam
 
 networks: 
   web-secure:
