@@ -8,11 +8,9 @@ http:
 
     phpmyadmin:
       service: opencart-phpmyadmin
-      rule: Host(`opencart-phpmyadmin.cloud-migrations.nl`)
+      rule: Host(`ocphpmyadmin.local`)
       entryPoints:
         - web
-      middlewares:
-        - authelia-secure@docker
 
     opencartdevsecure:
       service: opencart-devsecure

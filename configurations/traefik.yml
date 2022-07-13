@@ -56,6 +56,22 @@ certificatesResolvers:
       httpChallenge:
         entryPoint: web
 
+  developmenttls:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+  productiontls:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
 # Provider Configuration
 # ---
 # TODO: Customize your Provider Settings if needed
