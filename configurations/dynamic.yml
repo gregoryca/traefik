@@ -5,8 +5,6 @@ http:
       rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
         - web
-      middlewares:
-        - authelia-secure@docker
 
     phpmyadmin:
       service: opencart-phpmyadmin
