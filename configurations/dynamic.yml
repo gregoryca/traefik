@@ -1,4 +1,5 @@
 http:
+# HTTP routers
   routers:
     opencartdev:
       service: opencart-dev
@@ -26,6 +27,7 @@ http:
         servers:
           - url: https://192.168.1.144:443
 
+# TLS options and cypher specified
 tls:
   options:
     tls:
