@@ -6,12 +6,6 @@ http:
       entryPoints:
         - web
 
-    phpmyadmin:
-      service: opencart-phpmyadmin
-      rule: Host(`ocphpmyadmin.local`)
-      entryPoints:
-        - web
-
     opencartdevsecure:
       service: opencart-devsecure
       rule: Host(`opencartdev-secure.cloud-migrations.nl`)
@@ -31,11 +25,6 @@ http:
       loadBalancer:
         servers:
           - url: https://192.168.1.144:443
-    
-    opencart-phpmyadmin:
-      loadBalancer:
-        servers:
-          - url: http://192.168.1.144/phpmyadmin
 
 tls:
   options:
