@@ -64,7 +64,8 @@ providers:
 # DOCKER:
 # ---
   file:
-    directory: ./configurations/
+    directory: /configurations/
     watch: true
+
   docker:
-    exposedByDefault: false  # Default is true
+    exposedByDefault: true  # Default is true
