@@ -18,6 +18,12 @@ http:
       middlewares:
           - authelia-secure@docker
 
+    alienware:
+      service: alienware
+      rule: Host(`alienware17r5.local`)
+      entryPoints:
+        - web-secure
+
     opencartdevsecure:
       service: opencart-devsecure
       rule: Host(`opencartdev-secure.cloud-migrations.nl`)
@@ -32,6 +38,11 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.1.144:80
+
+    alienware:
+      loadBalancer:
+        servers:
+          - url: alienware17r5:3389
 
     opencart-devsecure:
       loadBalancer:
