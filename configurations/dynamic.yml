@@ -7,6 +7,17 @@ http:
       entryPoints:
         - web
 
+#Guacamole router with added middleware and TLS protection
+    guacamole-secure:
+      service: guacamole-secure
+      rule: Host(`guacamole.cloud-migrations.nl`)
+      entryPoints:
+        - web-secure
+      tls:
+        certResolver: production
+      middlewares:
+          - authelia-secure@docker
+
     opencartdevsecure:
       service: opencart-devsecure
       rule: Host(`opencartdev-secure.cloud-migrations.nl`)
@@ -25,7 +36,13 @@ http:
     opencart-devsecure:
       loadBalancer:
         servers:
-          - url: https://192.168.1.144:443
+          - url: https://192.168.1.144:80
+
+# Service for a Docker container which points to the internal Docker Network IP and Port
+    guacamole-secure:
+      loadBalancer:
+        servers:
+          - url: http://172.27.0.10:8080
 
 # TLS options and cypher specified
 tls:

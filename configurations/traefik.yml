@@ -85,3 +85,5 @@ providers:
 
   docker:
     exposedByDefault: true  # Default is true
+    network: web-secure
+    watch: true
