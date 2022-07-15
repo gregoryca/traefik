@@ -5,7 +5,7 @@ http:
       service: opencart-dev
       rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
-        - web
+        - web       
 
 #Guacamole router with added middleware and TLS protection
     guacamole-secure:
@@ -53,7 +53,7 @@ http:
     guacamole-secure:
       loadBalancer:
         servers:
-          - url: http://172.27.0.10:8080
+          - url: http://172.27.0.8:8080
 
 # TLS options and cypher specified
 tls:

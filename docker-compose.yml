@@ -5,7 +5,7 @@ volumes:
     driver: local
 
 services:
-  traefik:
+  traefik.rproxy:
     image: "traefik:latest"
     container_name: traefik.rproxy
     restart: always 
@@ -27,7 +27,6 @@ services:
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.cloud-migrations.nl`)"
       - "traefik.http.routers.traefik-secure.tls.certresolver=production"
       - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.services.traefik-secure.loadbalancer.server.port=8080" #port to the webservice
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.service=api@internal"
       - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
