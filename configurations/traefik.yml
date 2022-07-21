@@ -15,7 +15,6 @@ accesslog:
 # ---
 api:
   dashboard: true  # true by default
-  insecure: true  # Don't do this in production!
 
 # Entry Points configuration
 # ---

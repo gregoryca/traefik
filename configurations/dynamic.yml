@@ -14,7 +14,17 @@ http:
         - web-secure
 
 #Guacamole router with added middleware and TLS protection
-    guacamole-secure:
+    traefik-secure:
+      service: api@internal
+      rule: Host(`traefik.cloud-migrations.nl`)
+      entryPoints:
+        - web-secure
+      tls:
+        certResolver: production
+      middlewares:
+          - authelia-secure@docker
+
+    guacamole:
       service: guacamole-secure
       rule: Host(`guacamole.cloud-migrations.nl`)
       entryPoints:

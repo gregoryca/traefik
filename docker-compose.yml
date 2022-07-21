@@ -21,16 +21,6 @@ services:
       - "./configurations/:/configurations"
       - "./configurations/:/etc/traefik/"      
 
-    labels:
-      - "traefik.enable=true"
-
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.cloud-migrations.nl`)"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=production"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
-      - "traefik.http.routers.traefik-secure.service=api@internal"
-      - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
-
     networks:
       - web-secure
       - web
