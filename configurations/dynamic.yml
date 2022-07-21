@@ -1,11 +1,17 @@
 http:
 # HTTP routers
   routers:
-    opencartdev:
+    opencart-dev:
       service: opencart-dev
       rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
-        - web       
+        - web
+
+    Fiberglass-Planning:
+      service: Fiberglass-Planning
+      rule: Host(`import.cloud-migrations.nl`)
+      entryPoints:
+        - web-secure
 
 #Guacamole router with added middleware and TLS protection
     guacamole-secure:
@@ -18,19 +24,13 @@ http:
       middlewares:
           - authelia-secure@docker
 
-    alienware:
-      service: alienware
-      rule: Host(`alienware17r5.local`)
-      entryPoints:
-        - web-secure
-
-    opencartdevsecure:
+    opencart-devsecure:
       service: opencart-devsecure
       rule: Host(`opencartdev-secure.cloud-migrations.nl`)
       entryPoints:
         - web-secure
       tls:
-        certResolver: development
+        certResolver: production
 
 # Services being used by Routers
   services:
@@ -38,22 +38,22 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.1.144:80
-
-    alienware:
-      loadBalancer:
-        servers:
-          - url: alienware17r5:3389
-
+      
     opencart-devsecure:
       loadBalancer:
         servers:
-          - url: https://192.168.1.144:80
+          - url: https://192.168.1.144:443
 
 # Service for a Docker container which points to the internal Docker Network IP and Port
     guacamole-secure:
       loadBalancer:
         servers:
-          - url: http://172.27.0.8:8080
+          - url: https://172.27.0.8:8080
+
+    Fiberglass-Planning:
+      loadBalancer:
+        servers:
+          - url: https://192.168.1.135:7122        
 
 # TLS options and cypher specified
 tls:
