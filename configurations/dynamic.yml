@@ -6,14 +6,13 @@ http:
       rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
         - web
-
+          
     Fiberglass-Planning:
       service: Fiberglass-Planning
       rule: Host(`import.cloud-migrations.nl`)
       entryPoints:
         - web-secure
 
-#Guacamole router with added middleware and TLS protection
     traefik-secure:
       service: api@internal
       rule: Host(`traefik.cloud-migrations.nl`)
@@ -36,34 +35,45 @@ http:
 
     opencart-devsecure:
       service: opencart-devsecure
-      rule: Host(`opencartdev-secure.cloud-migrations.nl`)
+      rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
         - web-secure
       tls:
         certResolver: production
 
-# Services being used by Routers
+# Services
+
   services:
     opencart-dev:
       loadBalancer:
         servers:
           - url: http://192.168.1.144:80
+          - url: http://192.168.1.120:80
+
+    Fiberglass-Planning:
+      loadBalancer:
+        servers:
+          - url: https://192.168.1.135:7122     
       
     opencart-devsecure:
       loadBalancer:
         servers:
           - url: https://192.168.1.144:443
+          - url: https://192.168.1.120:443
 
-# Service for a Docker container which points to the internal Docker Network IP and Port
+# Service for Docker containers
+# pointing to the internal Docker 
+# Network IP and Port
+
     guacamole-secure:
       loadBalancer:
         servers:
-          - url: https://172.27.0.8:8080
-
-    Fiberglass-Planning:
-      loadBalancer:
-        servers:
-          - url: https://192.168.1.135:7122        
+          - url: http://172.27.0.7:8080
+   
+    # Uptime-Infra:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://172.27.0.11:3001
 
 # TLS options and cypher specified
 tls:
