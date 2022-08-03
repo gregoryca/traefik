@@ -8,14 +8,17 @@ http:
         - web
 
     opencartdevsecure:
+    #Make sure that the service you attach to your router exists
       service: opencart-devsecure
       rule: Host(`opencartdev-secure.cloud-migrations.nl`)
       entryPoints:
         - web-secure
+      #Adding TLS to the endpoint for https traffic
       tls:
         certResolver: development
 
 # Services being used by Routers
+#URL can be an internal IP address of docker network, or your homenetwork
   services:
     opencart-dev:
       loadBalancer:
