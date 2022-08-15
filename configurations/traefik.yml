@@ -7,9 +7,9 @@ log:
 
 # (Optional) Accesslog
 # ---
-accesslog:
-  format: json  # common, json, logfmt
-  filePath: /var/log/traefik/access.log
+accessLog:
+    format: json  # common, json, logfmt
+    filePath: /var/log/traefik/access.log
 
 # (Optional) Enable API and Dashboard
 # ---
