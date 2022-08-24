@@ -5,6 +5,12 @@ volumes:
     driver: local
 
 services:
+  traefik.rproxy:
+    image: "traefik:latest"
+    container_name: traefik.rproxy
+    restart: always
+    command:
+      -
   # Start the agent with the latest version
   hub-agent:
     image: ghcr.io/traefik/hub-agent-traefik:experimental
@@ -13,15 +19,10 @@ services:
     restart: "on-failure"
     command:
       - run
-      - --hub.token=5bc633c5-b084-4291-934c-2056a9c89bee
+      - --hub.token=feeb86b6-bebb-456b-88a0-857fa9c0b95f
       - --auth-server.advertise-url=http://hub-agent
-      - --traefik.host=traefik.cloud-migrations.nl
+      - --traefik.host=traefik.rproxy
       - --traefik.tls.insecure=true
-
-  traefik.rproxy:
-    image: "traefik:latest"
-    container_name: traefik.rproxy
-    restart: always 
 
     ports:
       - "80:80"
@@ -36,7 +37,7 @@ services:
       #this is for my dynamic config
       - "./configurations/:/configurations"
       #this is for my traefik static config
-      - "./configurations/:/etc/traefik/"      
+      - "./configurations/:/etc/traefik/"
 
     labels:
       - "traefik.enable=true"
@@ -60,7 +61,6 @@ services:
     networks:
       - web-secure
       - web
-
 #persisting of my docker network within this stack
 networks: 
   web-secure:
