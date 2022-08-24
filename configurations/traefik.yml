@@ -16,6 +16,9 @@ accessLog:
 api:
   dashboard: true  # true by default
 
+experimental:
+  http3: true
+
 # Entry Points configuration
 # ---
 entryPoints:
@@ -29,6 +32,8 @@ entryPoints:
     
   web-secure:
     address: ":443"
+    http3:
+      advertisedPort: 443
     forwardedHeaders:
       trustedIPs:
         - "127.0.0.1/32"
