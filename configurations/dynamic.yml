@@ -1,34 +1,35 @@
 http:
 # HTTP routers
   routers:
-    opencartdev:
+    opencart-dev:
       service: opencart-dev
       rule: Host(`opencartdev.cloud-migrations.nl`)
       entryPoints:
         - web
+        - web-secure
 
-    opencartdevsecure:
-    #Make sure that the service you attach to your router exists
-      service: opencart-devsecure
-      rule: Host(`opencartdev-secure.cloud-migrations.nl`)
+    traefik-secure:
+      service: api@internal
+      rule: Host(`traefik.cloud-migrations.nl`)
+      
       entryPoints:
         - web-secure
       #Adding TLS to the endpoint for https traffic
       tls:
-        certResolver: development
+        certResolver: production
+      middlewares:
+          - authelia-secure@docker
+# Services
 
 # Services being used by Routers
 #URL can be an internal IP address of docker network, or your homenetwork
+
   services:
     opencart-dev:
       loadBalancer:
         servers:
-          - url: http://192.168.1.144:80
-
-    opencart-devsecure:
-      loadBalancer:
-        servers:
-          - url: https://192.168.1.144:443
+          # - url: http://192.168.1.124:80
+          - url: http://192.168.1.145:80
 
 # TLS options and cypher specified
 tls:

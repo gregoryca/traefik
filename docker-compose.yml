@@ -5,7 +5,7 @@ volumes:
     driver: local
 
 services:
-  traefik:
+  traefik.rproxy:
     image: "traefik:latest"
     container_name: traefik.rproxy
     restart: always 
@@ -42,7 +42,7 @@ services:
       - "traefik.http.routers.traefik-secure.service=api@internal"
       #Use this only if you have Authelia deployed in your infra, and is reachable via an docker network
       - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
-
+      
     networks:
       - web-secure
       - web

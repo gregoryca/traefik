@@ -7,24 +7,38 @@ log:
 
 # (Optional) Accesslog
 # ---
-accesslog:
-  format: json  # common, json, logfmt
-  filePath: /var/log/traefik/access.log
+accessLog:
+    format: json  # common, json, logfmt
+    filePath: /var/log/traefik/access.log
 
 # (Optional) Enable API and Dashboard
 # ---
 api:
   dashboard: true  # true by default
-  insecure: true  # Don't do this in production!
+
+experimental:
+  http3: true
 
 # Entry Points configuration
 # ---
 entryPoints:
   web:
-    address: ":80" 
+    address: ":80"
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1/32"
+        - "192.168.0.0/16"
+        - "172.27.0.0/16"
     
   web-secure:
-    address: ":443"  
+    address: ":443"
+    http3:
+      advertisedPort: 443
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1/32"
+        - "192.168.0.0/16"
+        - "172.27.0.0/16"
 
   dnsovertls:
     address: ":853"
@@ -85,3 +99,5 @@ providers:
 
   docker:
     exposedByDefault: true  # Default is true
+    network: web-secure
+    watch: true
