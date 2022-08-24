@@ -11,14 +11,19 @@ http:
     traefik-secure:
       service: api@internal
       rule: Host(`traefik.cloud-migrations.nl`)
+      
       entryPoints:
         - web-secure
+      #Adding TLS to the endpoint for https traffic
       tls:
         certResolver: production
       middlewares:
           - authelia-secure@docker
-
 # Services
+
+# Services being used by Routers
+#URL can be an internal IP address of docker network, or your homenetwork
+
   services:
     opencart-dev:
       loadBalancer:
