@@ -20,16 +20,19 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
+  #Traefik
   traefik.rproxy:
     image: "traefik:latest"
     container_name: traefik.rproxy
     restart: always 
 
+    #Exposed ports to the host so traefik container can listen to these ports on the host machine
     ports:
       - "80:80"
       - "443:443"
       - "853:853"
 
+    #All volumes which are mounted locally to the traefik folder
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       #this is to save my ssl certifcates locally
