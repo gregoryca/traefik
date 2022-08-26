@@ -16,5 +16,5 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
+        port: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         script: cd /home/gregory/srv/traefik/ && docker-compose up -d --force-recreate
