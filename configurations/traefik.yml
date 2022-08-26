@@ -23,8 +23,8 @@ experimental:
       moduleName: github.com/Paxxs/traefik-get-real-ip
       version: v1.0.2
     redirect2https:
-          moduleName: "github.com/sunalwaysknows/redirect2https"
-          version: "v0.0.7"
+      moduleName: "github.com/sunalwaysknows/redirect2https"
+      version: "v0.0.7"
 
   hub: true
 
