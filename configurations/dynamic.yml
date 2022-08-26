@@ -18,6 +18,12 @@ http:
               OverwriteXFF: true # default: false, v1.0.2 or above
             - proxyHeadername: "*"
               realIP: RemoteAddr
+
+    my-redirect2https:
+      plugin:
+        redirect2https:
+            permanent: "true"
+            
 # HTTP routers
   routers:
     opencart-dev:
