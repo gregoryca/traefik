@@ -18,11 +18,11 @@ api:
 
 experimental:
   http3: true
-  hub: true
   plugins:
     real-ip:
       moduleName: github.com/Paxxs/traefik-get-real-ip
       version: v1.0.2
+  hub: true
 
 hub:
   tls:
@@ -40,17 +40,19 @@ pilot:
 entryPoints:
   web:
     address: ":80"
+    http3:
+      advertisedPort: 80
     forwardedHeaders:
       trustedIPs:
         - "127.0.0.1/32"
         - "192.168.0.0/16"
         - "172.27.0.0/16"
 
-  traefikhub-api: 
-    address: ":9900"
+  # traefikhub-api: 
+  #   address: ":9900"
 
-  traefikhub-tunl: 
-    address: ":9901"
+  # traefikhub-tunl: 
+  #   address: ":9901"
     
   web-secure:
     address: ":443"

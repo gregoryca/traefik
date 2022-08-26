@@ -13,10 +13,12 @@ services:
     restart: "on-failure"
     command:
       - run
-      - --hub.token=5bc633c5-b084-4291-934c-2056a9c89bee
+      - --hub.token=11f5a6f3-04d4-4034-beab-9a4e13505bea
       - --auth-server.advertise-url=http://hub-agent
       - --traefik.host=traefik.cloud-migrations.nl
       - --traefik.tls.insecure=true
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   traefik.rproxy:
     image: "traefik:latest"
@@ -30,7 +32,6 @@ services:
 
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/var/run/docker.sock:/v"
       #this is to save my ssl certifcates locally
       - "./traefik-ssl-certs:/ssl-certs"
       #this is for my dynamic config
