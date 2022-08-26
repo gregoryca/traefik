@@ -1,0 +1,20 @@
+name: Deploy Traefik docker-compose
+
+on:
+  # Triggers this Action on push or pull request events on the "main" branch and when manually requested from the "Actions" tab
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Start Traefik stack
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: cd /home/gregory/srv/traefik/ && docker-compose up -d --force-recreate
