@@ -20,7 +20,11 @@ jobs:
         port: ${{ secrets.PORT }}
         script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
 
-#Add step to pull latest code after changing branch
+    - name: Consume ansible playbook to deploy
+      uses: actions-ansible@v2
+      with:
+        playbook: ./deployments/deployment.yml
+        inventory: ./deployment/inventory
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
