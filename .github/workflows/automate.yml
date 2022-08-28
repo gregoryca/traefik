@@ -22,7 +22,7 @@ jobs:
     - name: Consume Ansible Playbook
       uses: arillso/action.playbook@master
       with:
-        playbook: /deployments/deployment.yml
+        playbook: ./deployments/deployment.yml
         inventory: ./inventory
 
     - name: Start Traefik stack
