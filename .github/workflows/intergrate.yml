@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
+
     #Starting the Traefik stack
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
@@ -18,4 +18,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/deployments && ansible-playbook deployment.yml
+        script: cd /temp/traefik/deployments && ansible-playbook deployment.yml
