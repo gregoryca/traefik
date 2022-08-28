@@ -20,7 +20,7 @@ jobs:
     #     compose_file: docker-compose.yml
     #     force_recreate: true
 
-    - uses: alex-ac/github-action-ssh-docker-compose@master
+    - uses: djnotes/github-action-ssh-docker-compose@v2.0.1
       name: Bring Traefik Stack Down
       with:
         ssh_host: ${{ secrets.HOST }}
@@ -29,7 +29,7 @@ jobs:
         ssh_port: ${{ secrets.PORT }}
         docker_compose_down: 'true'
 
-    - uses: alex-ac/github-action-ssh-docker-compose@master
+    - uses: djnotes/github-action-ssh-docker-compose@v2.0.1
       name: Deploy Docker-Compose Remote
       with:
         ssh_host: ${{ secrets.HOST }}
