@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: alex-ac/github-action-ssh-docker-compose@master
+      name: Docker-Compose Remote Deployment
+      with:
+        ssh_host: ${{ secrets.HOST }}
+        ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        ssh_user: ${{ secrets.secrets.USERNAME }}
+        ssh_port: ${{ secrets.PORT }}
+        docker_compose_prefix: traefik
+
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Start Traefik stack
+  #     uses: appleboy/ssh-action@master
+  #     with:
+  #       host: ${{ secrets.HOST }}
+  #       username: ${{ secrets.USERNAME }}
+  #       key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+  #       port: ${{ secrets.PORT }}
+  #       script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
