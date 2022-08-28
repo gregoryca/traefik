@@ -16,7 +16,7 @@ jobs:
       with:
         ssh_host: ${{ secrets.HOST }}
         ssh_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-        ssh_user: ${{ secrets.secrets.USERNAME }}
+        ssh_user: ${{ secrets.USERNAME }}
         compose_file: docker-compose.yml
         force_recreate: true
 
