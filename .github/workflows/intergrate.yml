@@ -1,9 +1,8 @@
 name: Verify Traefik docker-compose
 
 on:
-  # push:
-  #   branches-ignore: [master, main]
-  #   # Remove the line above to run when pushing to master
+  push:
+    branches-ignore: [master, main]
   pull_request:
     branches: [ development ]
 
