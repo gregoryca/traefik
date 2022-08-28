@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+    
+    #Starting the Traefik stack
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
       with:
