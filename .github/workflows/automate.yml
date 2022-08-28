@@ -18,7 +18,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: docker-compose stop traefik.rproxy
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose stop traefik.rproxy
 
     - name: Bring Hub-Agent Down
       uses: appleboy/ssh-action@master
@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: docker-compose stop traefik.rproxy
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose stop Hub-Agent
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
