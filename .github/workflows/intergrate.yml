@@ -13,8 +13,8 @@ jobs:
     - name: Consume Ansible Playbook
       uses: arillso/action.playbook@master
       with:
-        playbook: ./deployments/deployment.yml
-        inventory: ./deployments/inventory
+        playbook: /deployments/deployment.yml
+        inventory: /deployments/inventory
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
