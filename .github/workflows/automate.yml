@@ -18,7 +18,6 @@ jobs:
         ssh_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         ssh_user: ${{ secrets.secrets.USERNAME }}
         compose_file: docker-compose.yml
-        docker_compose_prefix: traefik
         force_recreate: true
 
   # build:
