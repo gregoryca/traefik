@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:    
-    #!
+
     - name: Bring Traefik-Stack Down
       uses: appleboy/ssh-action@master
       with:
@@ -19,7 +19,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
 
-    - name: Play Ansible Playbook
+    - name: Consume Ansible Playbook
       uses: arillso/action.playbook@master
       with:
         playbook: /deployments/deployment.yml
