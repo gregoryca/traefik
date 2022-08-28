@@ -11,6 +11,24 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Bring Traefik Down
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: docker-compose stop traefik.rproxy
+
+    - name: Bring Hub-Agent Down
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: docker-compose stop traefik.rproxy
+
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
       with:
