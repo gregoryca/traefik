@@ -1,0 +1,41 @@
+---
+- hosts: server17a
+  become: yes
+  tasks:
+
+  #Creating a directory on the host
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /temp/traefik
+      state: directory
+      mode: '0755'
+
+  #Checkout the Traefik Repo
+  - name: Git Checkout Traefik
+    ansible.builtin.git:
+      repo: 'https://github.com/gregoryca/traefik.git'
+      dest: /temp/traefik
+
+  #Copy the compose file
+  - name: copy Docker Compose files to remote server
+    copy:
+      src: /temp/traefik/docker-compose.yml
+      dest: /home/gregory/srv/traefik/
+    loop:
+    - docker-compose.yml
+
+  #Copy the static config file
+  - name: copy config traefik files to remote server
+    copy:
+      src: /temp/traefik/configurations/traefik.yml
+      dest: /home/gregory/srv/traefik/configurations/traefik.yml
+    loop:
+    - traefik.yml
+
+  #Copy the dynamic config file
+  - name: copy config traefik files to remote server
+    copy:
+      src: /temp/traefik/configurations/dynamic.yml
+      dest: /home/gregory/srv/traefik/configurations/dynamic.yml
+    loop:
+    - dynamic.yml

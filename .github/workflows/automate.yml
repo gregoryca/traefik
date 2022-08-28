@@ -8,9 +8,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    
+    steps:    
+    #!
     - name: Bring Traefik-Stack Down
       uses: appleboy/ssh-action@master
       with:
@@ -20,7 +19,11 @@ jobs:
         port: ${{ secrets.PORT }}
         script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
 
-#Add step to pull latest code after changing branch
+    - name: Play Ansible Playbook
+      uses: arillso/action.playbook@master
+      with:
+        playbook: /deployments/deployment.yml
+        inventory: inventory
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
