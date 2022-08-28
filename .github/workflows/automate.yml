@@ -11,15 +11,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: alex-ac/github-action-ssh-docker-compose@master
+    - uses: TapTap21/docker-remote-deployment-action@v1.0
       name: Docker-Compose Remote Deployment
       with:
-        ssh_host: ${{ secrets.HOST }}
+        remote_docker_host: ${{ secrets.HOST }}
         ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         ssh_user: ${{ secrets.secrets.USERNAME }}
         ssh_port: ${{ secrets.PORT }}
-        docker_compose_filename: ./docker-compose.yml
+        stack_file_name: docker-compose.yml
         docker_compose_prefix: traefik
+        args: up -d
 
   # build:
   #   name: Build
