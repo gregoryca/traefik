@@ -28,6 +28,7 @@ jobs:
         ssh_user: ${{ secrets.USERNAME }}
         ssh_port: ${{ secrets.PORT }}
         docker_compose_filename: ./docker-compose.yml
+        options: --force-recreate
 
   # build:
   #   name: Build
