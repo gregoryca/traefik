@@ -19,6 +19,12 @@ jobs:
         port: ${{ secrets.PORT }}
         script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
 
+    - name: Play Ansible Playbook
+      uses: arillso/action.playbook@master
+      with:
+        playbook: /deployments/deployment.yml
+        inventory: inventory
+
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
       with:
