@@ -11,16 +11,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: TapTap21/docker-remote-deployment-action@v1.0
+    - uses: chaplyk/docker-compose-remote-action@v1.1 
       name: Docker-Compose Remote Deployment
       with:
-        remote_docker_host: ${{ secrets.HOST }}
-        ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        ssh_host: ${{ secrets.HOST }}
+        ssh_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         ssh_user: ${{ secrets.secrets.USERNAME }}
-        ssh_port: ${{ secrets.PORT }}
-        stack_file_name: docker-compose.yml
+        compose_file: docker-compose.yml
         docker_compose_prefix: traefik
-        args: up -d
+        force_recreate: true
 
   # build:
   #   name: Build
