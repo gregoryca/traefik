@@ -10,21 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - uses: appleboy/ssh-action@master
-      name: Bring Down Traefik stack
+    
+    - name: Start Traefik stack
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
-
-    - uses: djnotes/github-action-ssh-docker-compose@v2.0.1
-      name: Deploy Docker-Compose Remote
-      with:
-        ssh_host: ${{ secrets.HOST }}
-        ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-        ssh_user: ${{ secrets.USERNAME }}
-        ssh_port: ${{ secrets.PORT }}
-        docker_compose_filename: ./docker-compose.yml
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
