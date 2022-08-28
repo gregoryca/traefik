@@ -1,5 +1,5 @@
 name: Deploy Traefik
-
+#On push to master branch, start a new Traefik deployment
 on:
   push:
     branches: [ master ]
