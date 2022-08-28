@@ -18,7 +18,7 @@ jobs:
         ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         ssh_user: ${{ secrets.secrets.USERNAME }}
         ssh_port: ${{ secrets.PORT }}
-        docker_compose_filename: ./traefik/docker-compose.yml
+        docker_compose_filename: ./docker-compose.yml
         docker_compose_prefix: traefik
 
   # build:
