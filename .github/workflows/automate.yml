@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:    
-
+    
     - name: Bring Traefik-Stack Down
       uses: appleboy/ssh-action@master
       with:
@@ -19,17 +19,11 @@ jobs:
         port: ${{ secrets.PORT }}
         script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose down
 
-    # - name: Consume ansible playbook to deploy
-    #   uses: actions-ansible@v2
-    #   with:
-    #     playbook: ./deployments/deployment.yml
-    #     inventory: ./deployment/inventory
-
-    # - name: Start Traefik stack
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-    #     port: ${{ secrets.PORT }}
-    #     script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d
+    - name: Start Traefik stack
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d
