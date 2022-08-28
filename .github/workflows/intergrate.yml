@@ -1,41 +1,26 @@
-name: Verify Traefik docker-compose
+name: Deploy Traefik
 
 on:
   push:
-    branches-ignore: [master, main]
-  pull_request:
-    branches: [ development ]
+    branches: [ master ]
 
 jobs:
-  build:
-    # Name the Job
-    name: Lint Code Base
-    # Set the agent to run on
+  deploy:
     runs-on: ubuntu-latest
-    steps:
 
-      ##########################
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
+    steps:    
 
-      ################################
-      # Run Linter against code base #
-      ################################
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Consume Ansible Playbook
+      uses: arillso/action.playbook@master
+      with:
+        playbook: ./deployments/deployment.yml
+        inventory: ./inventory
 
-    # - name: Verify docker-compose file
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-    #     port: ${{ secrets.PORT }}
-    #     script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
+    - name: Start Traefik stack
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
