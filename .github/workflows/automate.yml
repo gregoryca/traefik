@@ -23,7 +23,7 @@ jobs:
       uses: arillso/action.playbook@master
       with:
         playbook: /deployments/deployment.yml
-        inventory: inventory
+        inventory: ./inventory
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
