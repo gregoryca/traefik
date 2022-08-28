@@ -39,3 +39,11 @@
       dest: /home/gregory/srv/traefik/configurations/dynamic.yml
     loop:
     - dynamic.yml
+
+  #deploy compose file
+  - name: deploy Docker Compose stack on remote server
+    docker_compose:
+      project_src: /home/gregory/srv/traefik/
+      files:
+      - docker-compose.yml
+      recreate: always

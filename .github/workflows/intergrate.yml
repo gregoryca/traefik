@@ -8,13 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:    
-
-    - name: Consume Ansible Playbook
-      uses: arillso/action.playbook@master
-      with:
-        playbook: /deployments/deployment.yml
-        inventory: /deployments/inventory
+    steps:
 
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
@@ -23,4 +17,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
+        script: cd /home/${{ secrets.USERNAME }}/srv/traefik/deployments && ansible-playbook deployment.yml
