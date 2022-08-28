@@ -1,6 +1,8 @@
 name: Verify Traefik docker-compose
 
 on:
+  push:
+    branches-ignore: [master, main]
   pull_request:
     branches: [ development ]
 
@@ -36,6 +38,4 @@ jobs:
     #     username: ${{ secrets.USERNAME }}
     #     key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
     #     port: ${{ secrets.PORT }}
-    #     script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
-
     #     script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
