@@ -11,14 +11,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - uses: chaplyk/docker-compose-remote-action@v1.1 
+    # - uses: chaplyk/docker-compose-remote-action@v1.1 
+    #   name: Docker-Compose Remote Deployment
+    #   with:
+    #     ssh_host: ${{ secrets.HOST }}
+    #     ssh_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+    #     ssh_user: ${{ secrets.USERNAME }}
+    #     compose_file: docker-compose.yml
+    #     force_recreate: true
+
+    - uses: alex-ac/github-action-ssh-docker-compose@master
       name: Docker-Compose Remote Deployment
       with:
         ssh_host: ${{ secrets.HOST }}
-        ssh_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+        ssh_private_key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
         ssh_user: ${{ secrets.USERNAME }}
-        compose_file: docker-compose.yml
-        force_recreate: true
+        docker_compose_prefix: docker-compose
 
   # build:
   #   name: Build
