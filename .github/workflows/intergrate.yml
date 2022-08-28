@@ -8,14 +8,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:    
-
-    - name: Consume Ansible Playbook
-      uses: arillso/action.playbook@master
-      with:
-        playbook: deployments/deployment.yml
-        inventory: deployments/inventory
-        
     steps:
 
     - name: Start Traefik stack
