@@ -4,7 +4,7 @@ on:
   push:
     branches-ignore: [master, main]
   pull_request:
-    branches: [ development ]
+    branches: [ dev, development ]
 
 jobs:
   build:
