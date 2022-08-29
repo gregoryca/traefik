@@ -1,5 +1,5 @@
 name: Verify Traefik docker-compose
-
+#pipeline triggers
 on:
   push:
     branches-ignore: [master, main]
