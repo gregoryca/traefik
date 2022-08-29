@@ -19,6 +19,7 @@ http:
             - proxyHeadername: "*"
               realIP: RemoteAddr
 
+    #Redirect to https middleware
     my-redirect2https:
       plugin:
         redirect2https:
