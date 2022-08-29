@@ -15,7 +15,9 @@ jobs:
     steps:
 
 
-      ##########################
+      ########################
+      # Check-out code base #
+      ########################
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
