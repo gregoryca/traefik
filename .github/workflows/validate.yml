@@ -1,5 +1,5 @@
 name: Verify Traefik docker-compose
-
+#pipeline triggers
 on:
   push:
     branches-ignore: [master, main]
@@ -30,12 +30,3 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: Verify docker-compose file
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-    #     port: ${{ secrets.PORT }}
-    #     script: cd /home/${{ secrets.USERNAME }}/srv/traefik/ && docker-compose up -d --force-recreate
