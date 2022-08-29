@@ -1,5 +1,6 @@
 {
     "yaml.schemas": {
-        "https://json.schemastore.org/traefik-v2.json": "file:///home/gregory/srv/traefik/config/dynamic.yml"
+        "https://json.schemastore.org/traefik-v2.json": "file:///home/gregory/srv/traefik/config/dynamic.yml",
+        "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/$defs/playbook": "file:///c%3A/srv/deployments/deployment.yml"
     }
 }
