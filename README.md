@@ -36,7 +36,7 @@ Fork this project with github
 To deploy this project run
 
 ```bash
-  git push  <REMOTENAME> master 
+  git push <REMOTENAME> master 
 ```
 
 The master branch will trigger the pipeline for Deployment.
