@@ -1,5 +1,5 @@
 http:
-# Middlewares
+# HTTP Middlewares
   middlewares:
     real-ip-foo:
       plugin:
