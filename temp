@@ -1,13 +1,1 @@
 # "Host(`example.com`) && PathPrefix(`/whoami/`)"
-
-# http routing section
-# web:
-#   routers:
-#     # Define a connection between requests and services
-#     to-opencartdev:
-#       rule: "Host(`opencartdev.cloud-migrations.nl`)"
-#        # If the rule matches, applies the middleware
-#       middlewares:
-#       - test-user
-#       # If the rule matches, forward to the whoami service (declared below)
-#       service: whoami
