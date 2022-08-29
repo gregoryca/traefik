@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+
       ##########################
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -30,3 +31,15 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      #####################################
+      # Automatically create pull request #
+      #####################################
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     commit-message: Create pull request
+      #     title: Create pull request automatically
+      #     body: Redeploy infra with new code by creating a pull reqeust on Master branch
+      #     branch: master
+      #     base: origin/master
