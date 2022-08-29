@@ -17,7 +17,7 @@
       state: directory
       mode: '0755'
 
-  #Creating a srv directory on the host
+  #Creating a the configuration directory on the host
   - name: Create a directory if it does not exist
     ansible.builtin.file:
       path: /home/gregory/srv/traefik/configurations/
