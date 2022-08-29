@@ -10,7 +10,7 @@ GitHub Actions
 There are a few prerequisites before deployment:
 1) GitHub secrets for usage
 
-To create GitHub secrets follow this link: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+To create GitHub secrets follow this link: <https://docs.github.com/en/actions/security-guides/encrypted-secrets>
 
 2) Target Server reachable via ssh over the internet
 
