@@ -8,7 +8,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps: #Steps that the pipeline has defined
+    #Steps that the pipeline has defined
+    steps:
 
     #Starting the Traefik stack
     - name: Start Traefik stack
