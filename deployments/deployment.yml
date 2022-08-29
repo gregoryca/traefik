@@ -61,3 +61,9 @@
       files:
       - docker-compose.yml
       recreate: always
+
+  #Clean up temp folder after deployment
+  - name: Delete content & directory
+    file:
+      state: absent
+      path: /temp/traefik
