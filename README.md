@@ -1,16 +1,16 @@
 
 # Traefik stack
 
-This repo is a complete traefik stack able to be deployed in minutes
+This repository is a complete traefik stack able to be deployed in minutes
 
 It uses the following tools to accomplish that:     
 Ansible     
-Github Actions
+GitHub Actions
 
 There are a few prerequisites before deployment:
-1) Github secrets for usage
+1) GitHub secrets for usage
     
-    To create github secrets follow this link: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+    To create GitHub secrets follow this link: https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
 2) Target Server reachable via ssh over the internet
 
@@ -24,7 +24,7 @@ There are a few prerequisites before deployment:
 
 ## Installation
 
-Fork this project with github
+Fork this project with GitHub
 
 ```bash
   git clone git@github.com:USERNAME/FORKED-PROJECT.git
