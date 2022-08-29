@@ -1,6 +1,6 @@
 ---
 - hosts: server17a
-  become: yes
+  become: true
   tasks:
 
   #Creating a directory on the host
