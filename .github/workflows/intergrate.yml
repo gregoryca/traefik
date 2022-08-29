@@ -14,8 +14,8 @@ jobs:
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: cd /temp/traefik/deployments && ansible-playbook deployment.yml
+        host: ${{ secrets.HOST }} #Host to connect to
+        username: ${{ secrets.USERNAME }} #Username to authenticate with
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
+        port: ${{ secrets.PORT }} #Port to connect to
+        script: cd /temp/traefik/deployments && ansible-playbook deployment.yml #Script that get's executed over ssh
