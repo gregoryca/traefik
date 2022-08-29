@@ -1,4 +1,4 @@
-"Host(`example.com`) && PathPrefix(`/whoami/`)"
+# "Host(`example.com`) && PathPrefix(`/whoami/`)"
 
 # http routing section
 # web:
@@ -11,4 +11,3 @@
 #       - test-user
 #       # If the rule matches, forward to the whoami service (declared below)
 #       service: whoami
-
