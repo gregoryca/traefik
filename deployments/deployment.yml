@@ -3,10 +3,24 @@
   become: true
   tasks:
 
-  #Creating a directory on the host
+  #Creating a temp traefik directory on the host
   - name: Create a directory if it does not exist
     ansible.builtin.file:
       path: /temp/traefik
+      state: directory
+      mode: '0755'
+
+  #Creating a srv directory on the host
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /home/gregory/srv/traefik/
+      state: directory
+      mode: '0755'
+
+  #Creating a srv directory on the host
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /home/gregory/srv/traefik/configurations/
       state: directory
       mode: '0755'
 
