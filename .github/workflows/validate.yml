@@ -35,11 +35,11 @@ jobs:
       #####################################
       # Automatically create pull request #
       #####################################
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          commit-message: Create pull request
-          title: Create pull request automatically
-          body: Redeploy infra with new code by creating a pull reqeust on Master branch
-          branch: master
-          base: origin/master
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     commit-message: Create pull request
+      #     title: Create pull request automatically
+      #     body: Redeploy infra with new code by creating a pull reqeust on Master branch
+      #     branch: master
+      #     base: origin/master
