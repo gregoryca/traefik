@@ -5,7 +5,7 @@ volumes:
     driver: local
 
 services:
-  # Start the agent with the latest version
+  # Traefik Hub-Agent
   hub-agent:
     image: ghcr.io/traefik/hub-agent-traefik:experimental
     pull_policy: always
@@ -23,7 +23,7 @@ services:
       - web-secure
       - web
 
-  #Traefik
+  #Traefik reverse proxy
   traefik.rproxy:
     image: "traefik:latest"
     container_name: traefik.rproxy
