@@ -16,9 +16,12 @@ services:
       - --hub.token=11f5a6f3-04d4-4034-beab-9a4e13505bea
       - --auth-server.advertise-url=http://hub-agent
       - --traefik.host=traefik.cloud-migrations.nl
-      - --traefik.tls.insecure=true
+      - --traefik.tls.insecure=false
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - web-secure
+      - web
 
   #Traefik
   traefik.rproxy:
