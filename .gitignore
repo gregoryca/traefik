@@ -1,3 +1,4 @@
 traefik-ssl-certs/acme.json
 temp
-deployments/inventory
+configurations/inventory
+configurations/ansible.cfg
