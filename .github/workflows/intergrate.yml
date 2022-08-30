@@ -11,12 +11,22 @@ jobs:
     #Steps that the pipeline has defined
     steps:
 
-    #Starting the Traefik stack deployment
-    - name: Download Deployment file
+    #Create temp folder
+    - name: Create temp folder
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }} #Host to connect to
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: curl -LJO https://github.com/gregoryca/traefik/deployments/ && ansible-playbook deployment.yml #Script that get's executed over ssh
+        script: mkdir /temp/ #Script that get's executed over ssh
+
+    #Starting the Traefik stack deployment
+    - name: Download and execute Deployment file
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }} #Host to connect to
+        username: ${{ secrets.USERNAME }} #Username to authenticate with
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
+        port: ${{ secrets.PORT }} #Port to connect to
+        script: cd /temp/ && git clone https://github.com/gregoryca/traefik/deployments/deployment.yml && ansible-playbook deployment.yml #Script that get's executed over ssh
