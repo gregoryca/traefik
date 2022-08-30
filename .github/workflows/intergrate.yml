@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: mkdir -p /temp/ && cd /temp/ && git clone https://github.com/gregoryca/traefik.git #Script that get's executed over ssh
+        script: git clone https://github.com/gregoryca/traefik.git #Script that get's executed over ssh
 
     #Starting the Traefik stack deployment
     - name: Download and execute Deployment file
@@ -29,4 +29,4 @@ jobs:
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: cd /temp/traefik/deployments/ && ansible-playbook deployment.yml #Script that get's executed over ssh
+        script: cd /traefik/deployments/ && ansible-playbook deployment.yml #Script that get's executed over ssh
