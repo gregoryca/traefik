@@ -11,6 +11,16 @@ jobs:
     #Steps that the pipeline has defined
     steps:
 
+    #Checkout git repo
+    - name: Start Traefik stack
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }} #Host to connect to
+        username: ${{ secrets.USERNAME }} #Username to authenticate with
+        key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
+        port: ${{ secrets.PORT }} #Port to connect to
+        script: cd /temp/ && git clone https://github.com/gregoryca/traefik.git #Script that get's executed over ssh
+
     #Starting the Traefik stack
     - name: Start Traefik stack
       uses: appleboy/ssh-action@master
