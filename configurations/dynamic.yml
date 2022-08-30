@@ -1,0 +1,70 @@
+http:
+# HTTP Middlewares
+  middlewares:
+    real-ip-foo:
+      plugin:
+        real-ip:
+          Proxy:
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: mf-fun
+              realIP: X-Forwarded-For
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: mf-bar
+              realIP: Client-Ip
+              OverwriteXFF: true # default: false, v1.0.2 or above
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: cf-foo
+              realIP: Cf-Connecting-Ip
+              OverwriteXFF: true # default: false, v1.0.2 or above
+            - proxyHeadername: "*"
+              realIP: RemoteAddr
+
+    #Redirect to https middleware
+    my-redirect2https:
+      plugin:
+        redirect2https:
+            permanent: "true"
+            
+# HTTP routers
+  routers:
+    opencart-dev:
+      service: opencart-dev
+      rule: Host(`opencartdev.cloud-migrations.nl`)
+      entryPoints:
+        - web
+        - web-secure
+
+    traefik-secure:
+      service: api@internal
+      rule: Host(`traefik.cloud-migrations.nl`)
+      
+      entryPoints:
+        - web-secure
+      #Adding TLS to the endpoint for https traffic
+      tls:
+        certResolver: production
+      middlewares:
+          - authelia-secure@docker
+# Services
+
+# Services being used by Routers
+#URL can be an internal IP address of docker network, or your homenetwork
+
+  services:
+    opencart-dev:
+      loadBalancer:
+        servers:
+          # - url: http://192.168.1.124:80
+          - url: http://192.168.1.145:80
+
+# TLS options and cypher specified
+tls:
+  options:
+    tls:
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256

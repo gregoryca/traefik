@@ -1,0 +1,131 @@
+# (Optional) Log information
+# ---
+log:
+  level: ERROR  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: json  # common, json, logfmt
+  filePath: /var/log/traefik/traefik.log
+
+# (Optional) Accesslog
+# ---
+accessLog:
+    format: json  # common, json, logfmt
+    filePath: /var/log/traefik/access.log
+
+# (Optional) Enable API and Dashboard
+# ---
+api:
+  dashboard: true  # true by default
+
+experimental:
+  http3: true
+  plugins:
+    real-ip:
+      moduleName: github.com/Paxxs/traefik-get-real-ip
+      version: v1.0.2
+    redirect2https:
+      moduleName: "github.com/sunalwaysknows/redirect2https"
+      version: "v0.0.7"
+
+  hub: true
+
+hub:
+  tls:
+    insecure: true
+
+metrics:
+  prometheus:
+    addRoutersLabels: true
+
+pilot:
+    token: "08debba3-5654-4391-be7a-b0e8b4cae855"
+
+# Entry Points configuration
+# ---
+entryPoints:
+  web:
+    address: ":80"
+    http3:
+      advertisedPort: 80
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1/32"
+        - "192.168.0.0/16"
+        - "172.27.0.0/16"
+
+  # traefikhub-api: 
+  #   address: ":9900"
+
+  # traefikhub-tunl: 
+  #   address: ":9901"
+    
+  web-secure:
+    address: ":443"
+    http3:
+      advertisedPort: 443
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1/32"
+        - "192.168.0.0/16"
+        - "172.27.0.0/16"
+
+  dnsovertls:
+    address: ":853"
+
+  udpdns:
+    address: ":53/udp"
+    
+  dns:
+    address: ":53"
+
+# Certificates configuration
+# ---
+# TODO: Custmoize your Cert Resolvers and Domain settings
+# 
+certificatesResolvers:
+  development:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+        
+  production:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+  developmenttls:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+  productiontls:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+# Provider Configuration
+# ---
+# TODO: Customize your Provider Settings if needed
+# 
+providers:
+# DOCKER:
+# ---
+  file:
+    directory: /configurations/
+    watch: true
+
+  docker:
+    exposedByDefault: true  # Default is true
+    network: web-secure
+    watch: true

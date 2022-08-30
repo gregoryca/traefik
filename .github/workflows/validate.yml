@@ -1,0 +1,47 @@
+name: Verify Traefik docker-compose
+#pipeline triggers
+on:
+  push:
+    branches-ignore: [master, main]
+  pull_request:
+    branches: [ dev, development ]
+
+jobs:
+  build:
+    # Name the Job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+    steps:
+
+
+      ########################
+      # Check-out code base #
+      ########################
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      #####################################
+      # Automatically create pull request #
+      #####################################
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     commit-message: Create pull request
+      #     title: Create pull request automatically
+      #     body: Redeploy infra with new code by creating a pull reqeust on Master branch
+      #     branch: master
+      #     base: origin/master
