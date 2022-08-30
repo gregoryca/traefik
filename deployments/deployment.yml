@@ -17,12 +17,6 @@
       state: directory
       mode: '0777'
 
-  #Checkout the Traefik Repo
-  - name: Git Checkout Traefik
-    ansible.builtin.git:
-      repo: 'https://github.com/gregoryca/traefik.git'
-      dest: /temp/traefik
-
   #Copy the compose file
   - name: copy Docker Compose files to remote server
     copy:
@@ -60,3 +54,9 @@
     file:
       state: absent
       path: /temp/traefik
+
+  #Clean up commit folder after deployment
+  - name: Delete content & directory
+    file:
+      state: absent
+      path: /home/gregory/traefik/
