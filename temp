@@ -1,6 +1,0 @@
-<<<<<<< HEAD
-# "Host(`example.com`) && PathPrefix(`/whoami/`)"
-=======
-# "Host(`example.com`) && PathPrefix(`/whoami/`)"
-#test
->>>>>>> 52569ea0a276fef23c5292d3171d5230e7fcc6c7
