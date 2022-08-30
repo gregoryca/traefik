@@ -54,7 +54,7 @@
     loop:
     - dynamic.yml
 
-  #deploy compose file
+  #Deploy compose file
   - name: deploy Docker Compose stack on remote server
     docker_compose:
       project_src: /home/gregory/srv/traefik/
