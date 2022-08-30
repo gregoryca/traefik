@@ -9,6 +9,12 @@
       path: /temp/traefik
       state: directory
       mode: '0755'
+  
+  #Checkout Traefik repo for deployment
+  - name: Git checkout
+    ansible.builtin.git:
+      repo: 'https://github.com/gregoryca/traefik.git'
+      dest: /temp/traefik
 
   #Creating a srv directory on the host
   - name: Create a directory if it does not exist
