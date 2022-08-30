@@ -13,14 +13,14 @@
   #Creating a srv directory on the host
   - name: Create a directory if it does not exist
     ansible.builtin.file:
-      path: /home/gregory/srv/traefik/
+      path: /home/${{ secrets.USERNAME }}/srv/traefik/
       state: directory
       mode: '0755'
 
   #Creating a the configuration directory on the host
   - name: Create a directory if it does not exist
     ansible.builtin.file:
-      path: /home/gregory/srv/traefik/configurations/
+      path: /home/${{ secrets.USERNAME }}/srv/traefik/configurations/
       state: directory
       mode: '0755'
 
@@ -34,7 +34,7 @@
   - name: copy Docker Compose files to remote server
     copy:
       src: /temp/traefik/docker-compose.yml
-      dest: /home/gregory/srv/traefik/
+      dest: /home/${{ secrets.USERNAME }}/srv/traefik/
     loop:
     - docker-compose.yml
 
@@ -42,7 +42,7 @@
   - name: copy config traefik files to remote server
     copy:
       src: /temp/traefik/configurations/traefik.yml
-      dest: /home/gregory/srv/traefik/configurations/traefik.yml
+      dest: /home/${{ secrets.USERNAME }}/srv/traefik/configurations/traefik.yml
     loop:
     - traefik.yml
 
@@ -50,14 +50,14 @@
   - name: copy config traefik files to remote server
     copy:
       src: /temp/traefik/configurations/dynamic.yml
-      dest: /home/gregory/srv/traefik/configurations/dynamic.yml
+      dest: /home/${{ secrets.USERNAME }}/srv/traefik/configurations/dynamic.yml
     loop:
     - dynamic.yml
 
   #Deploy compose file
   - name: deploy Docker Compose stack on remote server
     docker_compose:
-      project_src: /home/gregory/srv/traefik/
+      project_src: /home/${{ secrets.USERNAME }}/srv/traefik/
       files:
       - docker-compose.yml
       recreate: always
