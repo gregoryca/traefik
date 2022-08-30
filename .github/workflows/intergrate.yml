@@ -19,4 +19,4 @@ jobs:
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: curl -LJO https://github.com/gregoryca/traefik/deployments/deployment.yml && ansible-playbook deployment.yml #Script that get's executed over ssh
+        script: curl -LJO https://github.com/gregoryca/traefik/deployments && ansible-playbook deployment.yml #Script that get's executed over ssh
