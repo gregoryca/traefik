@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: mkdir /temp/ #Script that get's executed over ssh
+        script: mkdir -p /temp/ #Script that get's executed over ssh
 
     #Starting the Traefik stack deployment
     - name: Download and execute Deployment file
