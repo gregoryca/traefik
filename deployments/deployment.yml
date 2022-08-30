@@ -59,4 +59,4 @@
   - name: Delete content & directory
     file:
       state: absent
-      path: /home/gregory/traefik
+      path: /temp/traefik
