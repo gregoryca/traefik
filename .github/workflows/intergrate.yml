@@ -29,4 +29,4 @@ jobs:
         username: ${{ secrets.USERNAME }} #Username to authenticate with
         key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }} #Private key host you're connecting to
         port: ${{ secrets.PORT }} #Port to connect to
-        script: mkdir /temp/ && cd /temp/ && git clone https://github.com/gregoryca/traefik.git && cd /home/gregory/traefik/deployments && ansible-playbook deployment.yml #Script that get's executed over ssh
+        script: mkdir /tmp/ && cd /tmp/ && git clone https://github.com/gregoryca/traefik.git && cd /home/gregory/traefik/deployments && ansible-playbook deployment.yml #Script that get's executed over ssh
