@@ -12,7 +12,7 @@ jobs:
     steps:
 
     #Checkout git repo
-    - name: Start Traefik stack
+    - name: Checkout Traefik stack
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }} #Host to connect to
