@@ -1,5 +1,5 @@
 ---
-- hosts: server17a
+- hosts: all
   become: true
   tasks:
 
