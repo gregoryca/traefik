@@ -55,8 +55,8 @@
       state: absent
       path: /temp/traefik
 
-  #Clean up commit folder after deployment
-  - name: Delete content & directory
-    file:
-      state: absent
-      path: /home/gregory/traefik/
+  # #Clean up commit folder after deployment
+  # - name: Delete content & directory
+  #   file:
+  #     state: absent
+  #     path: /home/gregory/traefik/
