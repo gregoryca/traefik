@@ -18,8 +18,12 @@ Make sure that your server is reachable over ssh
 
 3) Ansible - installed on the target server
 
-It is important that Ansible is installed on the target machine
+It is important that Ansible is installed on the target machine. 
+Make that sure Ansible has an Ansible.cfg and inventory defined
 
+The Ansible.cfg and Inventory should be placed in: ./Traefik/Deployments/
+
+The path should be: ./Traefik/Deployments/Ansible.cfg && ./Traefik/Deployments/Inventory
 
 
 ## Installation
