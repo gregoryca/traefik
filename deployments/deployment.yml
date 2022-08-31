@@ -38,6 +38,7 @@
       dest: /home/gregory/srv/traefik/
     loop:
     - docker-compose.yml
+    remote_src: false
 
   #Copy the static config file
   - name: copy static traefik config file to remote server
@@ -46,6 +47,7 @@
       dest: /home/gregory/srv/traefik/configurations/traefik.yml
     loop:
     - traefik.yml
+    remote_src: false
 
   #Copy the dynamic config file
   - name: copy dynamic traefik config file to remote server
@@ -54,7 +56,8 @@
       dest: /home/gregory/srv/traefik/configurations/dynamic.yml
     loop:
     - dynamic.yml
-
+    remote_src: false
+    
   #Deploy compose file
   - name: deploy Docker Compose stack on remote server
     docker_compose:
