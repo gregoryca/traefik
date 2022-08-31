@@ -1,0 +1,7 @@
+[linux]
+server17a ansible_host=192.168.1.103
+
+[linux:vars]
+private_key_file = /home/gregory/.ssh/rsa_id.pub
+ansible_user = gregory
+ansible_sudo_pass = laliloe
