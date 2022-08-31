@@ -6,7 +6,7 @@
   #Creating a temp directory on the host
   - name: Create a temp directory if it does not exist
     ansible.builtin.file:
-      path: /temp/traefik
+      path: /temp/traefik/
       state: directory
       mode: '0777'
 
@@ -14,18 +14,18 @@
   - name: Checkout Git repo in temp directory
     ansible.builtin.git:
       repo: 'https://github.com/gregoryca/traefik.git'
-      dest: /temp/traefik
+      dest: /temp/traefik/
 
 
   #Creating a srv directory on the host
-  - name: Create a directory if it does not exist
+  - name: Create the srv directory if it does not exist
     ansible.builtin.file:
       path: /home/gregory/srv/traefik/
       state: directory
       mode: '0777'
 
   #Creating a the configuration directory on the host
-  - name: Create a directory if it does not exist
+  - name: Create the configurations directory if it does not exist
     ansible.builtin.file:
       path: /home/gregory/srv/traefik/configurations/
       state: directory
@@ -40,7 +40,7 @@
     - docker-compose.yml
 
   #Copy the static config file
-  - name: copy config traefik files to remote server
+  - name: copy static traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/traefik.yml
       dest: /home/gregory/srv/traefik/configurations/traefik.yml
@@ -48,7 +48,7 @@
     - traefik.yml
 
   #Copy the dynamic config file
-  - name: copy config traefik files to remote server
+  - name: copy dynamic traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/dynamic.yml
       dest: /home/gregory/srv/traefik/configurations/dynamic.yml
@@ -67,4 +67,4 @@
   - name: Delete content & directory
     file:
       state: absent
-      path: /temp/traefik
+      path: /temp/traefik/
