@@ -25,10 +25,10 @@ The following secrets are used for deployment:
 It is important that Ansible is installed on the target machine. 
 Also make sure that Ansible has an Ansible.cfg and inventory defined in the same folder as de deployment script.
 
-The Ansible.cfg and Inventory should be placed in: ./traefik/Deployments/
+The ansible.cfg and inventory should be placed in: ./traefik/deployments/
+The path should be: ./traefik/deployments/ansible.cfg && ./traefik/deployments/inventory
 
-The path should be: ./traefik/Deployments/Ansible.cfg && ./traefik/Deployments/Inventory
-
+Feel free to add, or change the ansible deployment script according to your needs.
 
 ## Installation
 
