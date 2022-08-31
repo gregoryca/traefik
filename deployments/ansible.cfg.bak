@@ -1,5 +1,0 @@
-[defaults]
-#Location of inventory file
-inventory = inventory
-#Enable or Disable host key checking
-host_key_checking = true
