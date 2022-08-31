@@ -23,10 +23,12 @@ The following secrets are used for deployment:
 3 - Ansible installed on the target server(s)
 
 It is important that Ansible is installed on the target machine. 
+
 Also make sure that your forked repo has the right inventory secrets defined. 
 If not, the intergrate.yml pipeline can't run on the target server(s)
+![inventory](https://user-images.githubusercontent.com/10562868/187670468-34125a16-e593-4c2c-92d8-3507b310e033.PNG)
 
-The intergrate.yml can be found under: ./FORKED REPO/./github/workflows
+The intergrate.yml can be found under: ./FORKED REPO/.github/workflows
 
 Feel free to add, or change the ansible deployment script according to your needs.
 
@@ -57,5 +59,5 @@ The master branch will trigger the pipeline for deployment. Or you can dispatch 
 ![page 2](https://user-images.githubusercontent.com/10562868/187653836-2e1ff70b-df94-461a-b40c-6e1eff537ccd.PNG)
 
 ## Trigger Deployment
-Select the work flow you want to trigger and press the blue underscored button (The deployment is the only file that has a workflow_dispatch)
+Select the work flow you want to trigger and press the blue underscored button.
 ![page 3](https://user-images.githubusercontent.com/10562868/187654844-c20de884-21b2-4df1-86a6-a2a221497483.PNG)
