@@ -59,5 +59,5 @@ The master branch will trigger the pipeline for deployment. Or you can dispatch 
 ![page 2](https://user-images.githubusercontent.com/10562868/187653836-2e1ff70b-df94-461a-b40c-6e1eff537ccd.PNG)
 
 ## Trigger Deployment
-Select the work flow you want to trigger and press the blue underscored button (The deployment is the only file that has a workflow_dispatch)
+Select the work flow you want to trigger and press the blue underscored button.
 ![page 3](https://user-images.githubusercontent.com/10562868/187654844-c20de884-21b2-4df1-86a6-a2a221497483.PNG)
