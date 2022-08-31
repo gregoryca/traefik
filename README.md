@@ -4,7 +4,7 @@
 This repository is a complete traefik stack able to be deployed in minutes
 
 It uses the following tools to accomplish that:
-Ansible
+Ansible, 
 GitHub Actions
 
 There are a few prerequisites before deployment.
@@ -19,8 +19,6 @@ The following secrets are used for deployment:
 ![secrets](https://user-images.githubusercontent.com/10562868/187651966-85bd7898-1f7d-4fec-9e8e-56567171aa34.PNG)
 
 2) Target Server reachable via ssh over the internet
-
-Make sure that your server is reachable over ssh
 
 3) Ansible - installed on the target server
 
