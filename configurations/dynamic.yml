@@ -19,7 +19,7 @@ http:
             - proxyHeadername: "*"
               realIP: RemoteAddr
 
-    #Redirect to https middleware
+    # Redirect to https middleware
     my-redirect2https:
       plugin:
         redirect2https:
@@ -40,7 +40,7 @@ http:
       
       entryPoints:
         - web-secure
-      #Adding TLS to the endpoint for https traffic
+      # Adding TLS to the endpoint for https traffic
       tls:
         certResolver: production
       middlewares:
@@ -48,7 +48,7 @@ http:
 # Services
 
 # Services being used by Routers
-#URL can be an internal IP address of docker network, or your homenetwork
+# URL can be an internal IP address of docker network, or your homenetwork
 
   services:
     opencart-dev:
