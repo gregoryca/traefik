@@ -22,7 +22,7 @@ Make sure that your server is reachable over ssh
 3) Ansible - installed on the target server
 
 It is important that Ansible is installed on the target machine. 
-Make that sure Ansible has an Ansible.cfg and inventory defined
+Make that sure Ansible has an Ansible.cfg and inventory defined.
 
 The Ansible.cfg and Inventory should be placed in: ./Traefik/Deployments/
 
@@ -38,6 +38,7 @@ Fork this project with GitHub
   cd /path/to/FORKED-PROJECT
 ```
 
+
 ## Deployment
 
 To deploy this project run
@@ -46,4 +47,4 @@ To deploy this project run
   git push <REMOTENAME> master 
 ```
 
-The master branch will trigger the pipeline for Deployment.
+The master branch will trigger the pipeline for deployment.
