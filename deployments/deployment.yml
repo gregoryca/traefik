@@ -70,4 +70,4 @@
   - name: Delete content & directory
     file:
       state: absent
-      path: /temp/traefik/
+      path: /temp/
