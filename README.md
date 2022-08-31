@@ -25,11 +25,11 @@ Make sure that your server is reachable over ssh
 3) Ansible - installed on the target server
 
 It is important that Ansible is installed on the target machine. 
-Make that sure Ansible has an Ansible.cfg and inventory defined.
+Also make sure that Ansible has an Ansible.cfg and inventory defined in the same folder as de deployment script.
 
-The Ansible.cfg and Inventory should be placed in: ./Traefik/Deployments/
+The Ansible.cfg and Inventory should be placed in: ./traefik/Deployments/
 
-The path should be: ./Traefik/Deployments/Ansible.cfg && ./Traefik/Deployments/Inventory
+The path should be: ./traefik/Deployments/Ansible.cfg && ./traefik/Deployments/Inventory
 
 
 ## Installation
@@ -50,4 +50,14 @@ To deploy this project run
   git push <REMOTENAME> master 
 ```
 
-The master branch will trigger the pipeline for deployment.
+The master branch will trigger the pipeline for deployment. Or you can dispatch the workflow by going to:
+
+## On the forked repo homepage
+![page 1](https://user-images.githubusercontent.com/10562868/187653581-856d24f2-590b-4569-9fbc-8b3aca4d5b1c.PNG)
+
+## Navigate to the Actions page
+![page 2](https://user-images.githubusercontent.com/10562868/187653836-2e1ff70b-df94-461a-b40c-6e1eff537ccd.PNG)
+
+## Trigger Deployment
+Select the work flow you want to trigger and press the blue underscored button (The deployment is the only file that has a workflow_dispatch)
+![page 3](https://user-images.githubusercontent.com/10562868/187654844-c20de884-21b2-4df1-86a6-a2a221497483.PNG)
