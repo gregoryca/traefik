@@ -7,7 +7,10 @@ It uses the following tools to accomplish that:
 Ansible
 GitHub Actions
 
-There are a few prerequisites before deployment:
+There are a few prerequisites before deployment.
+
+## Prerequisites
+
 1) GitHub secrets for usage
 
 To create GitHub secrets follow this link: <https://docs.github.com/en/actions/security-guides/encrypted-secrets>.
