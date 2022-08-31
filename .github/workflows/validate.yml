@@ -1,4 +1,4 @@
-name: Verify Traefik docker-compose
+name: Lint the code that has been checked in
 #pipeline triggers
 on:
   push:
