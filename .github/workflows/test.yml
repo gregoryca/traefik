@@ -38,9 +38,8 @@ jobs:
           # Optional, literal inventory file contents
           inventory: |
             [linux]
-            server17a ansible_host=apex-migrations.ddns.net ansible_port=6908
+            server17a ansible_host=${{ secrets.HOST }} ansible_port=${{ secrets.PORT }}
 
             [linux:vars]
-            private_key_file = /home/gregory/.ssh/rsa_id.pub
             ansible_user = ${{ secrets.USERNAME }}
-            ansible_sudo_pass = laliloe
+            ansible_sudo_pass = ${{ secrets.PASSWORD }}

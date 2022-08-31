@@ -4,17 +4,17 @@
   tasks:
 
   #Creating a temp directory on the host
-  - name: Create a directory if it does not exist
+  - name: Create a temp directory if it does not exist
     ansible.builtin.file:
-      path: /temp/
+      path: /temp/traefik
       state: directory
       mode: '0777'
 
   #Checkout Git Repo for latest code
-  - name: Git checkout
+  - name: Checkout Git repo in temp directory
     ansible.builtin.git:
       repo: 'https://github.com/gregoryca/traefik.git'
-      dest: /temp/
+      dest: /temp/traefik
 
 
   #Creating a srv directory on the host
