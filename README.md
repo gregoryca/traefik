@@ -5,7 +5,6 @@ This repository is a complete traefik stack able to be deployed in minutes
 
 It uses the following tools to accomplish that:
 Ansible, 
-
 GitHub Actions
 
 There are a few prerequisites before deployment.
