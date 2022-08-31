@@ -3,35 +3,44 @@
   become: true
   tasks:
 
-  #Creating a temp directory on the host
+  #########################################
+  # Creating a temp directory on the host #
+  #########################################
   - name: Create a temp directory if it does not exist
     ansible.builtin.file:
       path: /temp/traefik/
       state: directory
       mode: '0777'
 
-  #Checkout Git Repo for latest code
+  ######################################
+  # Checkout Git Repo for latest code #
+  ######################################
   - name: Checkout Git repo in temp directory
     ansible.builtin.git:
       repo: 'https://github.com/gregoryca/traefik.git'
       dest: /temp/traefik/
 
-
-  #Creating a srv directory on the host
+  ########################################
+  # Creating a srv directory on the host #
+  ########################################  
   - name: Create the srv directory if it does not exist
     ansible.builtin.file:
       path: /home/gregory/srv/traefik/
       state: directory
       mode: '0777'
 
-  #Creating a the configuration directory on the host
+  ######################################################
+  # Creating a the configuration directory on the host #
+  ######################################################
   - name: Create the configurations directory if it does not exist
     ansible.builtin.file:
       path: /home/gregory/srv/traefik/configurations/
       state: directory
       mode: '0777'
 
-  #Copy the compose file
+  #########################
+  # Copy the compose file #
+  #########################
   - name: copy Docker Compose files to remote server
     copy:
       src: /temp/traefik/docker-compose.yml
@@ -40,7 +49,9 @@
     loop:
     - docker-compose.yml
 
-  #Copy the static config file
+  ###############################
+  # Copy the static config file #
+  ###############################
   - name: copy static traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/traefik.yml
@@ -49,7 +60,9 @@
     loop:
     - traefik.yml
 
-  #Copy the dynamic config file
+  ################################
+  # Copy the dynamic config file #
+  ################################
   - name: copy dynamic traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/dynamic.yml
@@ -58,7 +71,9 @@
     loop:
     - dynamic.yml
 
-  #Deploy compose file
+  #######################
+  # Deploy compose file #
+  #######################
   - name: deploy Docker Compose stack on remote server
     docker_compose:
       project_src: /home/gregory/srv/traefik/
@@ -66,7 +81,9 @@
       - docker-compose.yml
       recreate: always
 
-  #Clean up temp folder after deployment
+  #########################################
+  # Clean up temp folder after deployment #
+  #########################################
   - name: Delete content & directory
     file:
       state: absent
