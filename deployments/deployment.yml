@@ -3,6 +3,20 @@
   become: true
   tasks:
 
+  #Creating a temp directory on the host
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /temp/
+      state: directory
+      mode: '0777'
+
+  #Checkout Git Repo for latest code
+  - name: Git checkout
+    ansible.builtin.git:
+      repo: 'https://github.com/gregoryca/traefik.git'
+      dest: /temp/
+
+
   #Creating a srv directory on the host
   - name: Create a directory if it does not exist
     ansible.builtin.file:
@@ -54,9 +68,3 @@
     file:
       state: absent
       path: /temp/traefik
-
-  # #Clean up commit folder after deployment
-  # - name: Delete content & directory
-  #   file:
-  #     state: absent
-  #     path: /home/gregory/traefik/

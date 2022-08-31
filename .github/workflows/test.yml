@@ -38,7 +38,7 @@ jobs:
           # Optional, literal inventory file contents
           inventory: |
             [linux]
-            server17a ansible_host=192.168.1.103
+            server17a ansible_host=apex-migrations.ddns.net
 
             [linux:vars]
             private_key_file = /home/gregory/.ssh/rsa_id.pub
