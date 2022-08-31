@@ -23,10 +23,10 @@ The following secrets are used for deployment:
 3 - Ansible installed on the target server(s)
 
 It is important that Ansible is installed on the target machine. 
-Also make sure that Ansible has an Ansible.cfg and inventory defined in the same folder as de deployment script.
+Also make sure that your forked repo has the right inventory secrets defined. 
+If not, the intergrate.yml pipeline can't run on the target server(s)
 
-The ansible.cfg and inventory should be placed in: ./traefik/deployments/
-The path should be: ./traefik/deployments/ansible.cfg && ./traefik/deployments/inventory
+The intergrate.yml can be found under: ./FORKED REPO/./github/workflows
 
 Feel free to add, or change the ansible deployment script according to your needs.
 
