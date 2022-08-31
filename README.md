@@ -11,6 +11,8 @@ There are a few prerequisites before deployment:
 1) GitHub secrets for usage
 
 To create GitHub secrets follow this link: <https://docs.github.com/en/actions/security-guides/encrypted-secrets>
+The following secrets are used for deployment:
+![secrets](https://user-images.githubusercontent.com/10562868/187651966-85bd7898-1f7d-4fec-9e8e-56567171aa34.PNG)
 
 2) Target Server reachable via ssh over the internet
 
