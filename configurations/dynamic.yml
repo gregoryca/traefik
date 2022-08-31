@@ -1,5 +1,7 @@
 http:
-# HTTP Middlewares
+####################
+# HTTP Middlewares #
+####################
   middlewares:
     real-ip-foo:
       plugin:
@@ -19,13 +21,17 @@ http:
             - proxyHeadername: "*"
               realIP: RemoteAddr
 
-    # Redirect to https middleware
+    ################################
+    # Redirect to https middleware #
+    ################################
     my-redirect2https:
       plugin:
         redirect2https:
             permanent: "true"
-            
-# HTTP routers
+
+#################            
+# HTTP routers #
+################
   routers:
     opencart-dev:
       service: opencart-dev
@@ -40,24 +46,28 @@ http:
       
       entryPoints:
         - web-secure
-      # Adding TLS to the endpoint for https traffic
+      ################################################  
+      # Adding TLS to the endpoint for https traffic #
+      ################################################
       tls:
         certResolver: production
       middlewares:
           - authelia-secure@docker
-# Services
 
-# Services being used by Routers
-# URL can be an internal IP address of docker network, or your homenetwork
-
+############################################################################
+# Services being used by Routers                                           #
+# URL can be an internal IP address of docker network, or your homenetwork #
+############################################################################
   services:
     opencart-dev:
       loadBalancer:
         servers:
           # - url: http://192.168.1.124:80
           - url: http://192.168.1.145:80
-
-# TLS options and cypher specified
+          
+####################################
+# TLS options and cypher specified #
+####################################
 tls:
   options:
     tls:
