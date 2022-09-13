@@ -31,7 +31,7 @@ If not, the intergrate.yml pipeline can't run on the target server(s)
 The intergrate.yml can be found under: ./FORKED REPO/.github/workflows
 
 Feel free to add, or change the ansible deployment script according to your needs.
-Do not forget to change the traefik URL in the docker-compose file, to a C-NAME record which points to your home address using DynDNS (DDNS)
+Do not forget to change the traefik URL in the docker-compose file, to a C-NAME record which points to your public IP using DynDNS (DDNS)
 
 ## Installation
 
