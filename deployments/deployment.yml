@@ -8,14 +8,14 @@
   ###############################
   - name: Create web network
     docker_network:
-    name: web
+      name: web
 
   ######################################
   # Creating docker network web-secure #
   ######################################
-- name: Create a network
+  - name: Create web-secure network
     docker_network:
-    name: web-secure
+      name: web-secure
 
   #########################################
   # Creating a temp directory on the host #
