@@ -34,7 +34,15 @@ hub:
 
 metrics:
   prometheus:
+    entryPoint: metrics
     addRoutersLabels: true
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
 
 pilot:
     token: "08debba3-5654-4391-be7a-b0e8b4cae855"
@@ -76,6 +84,10 @@ entryPoints:
     
   dns:
     address: ":53"
+  
+  metrics:
+    address: ":8082"
+
 
 # Certificates configuration
 # ---

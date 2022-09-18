@@ -36,6 +36,7 @@ services:
       - "80:80"
       - "443:443"
       - "853:853"
+      - "8082:8082"
 
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
