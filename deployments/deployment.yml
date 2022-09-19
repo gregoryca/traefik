@@ -2,6 +2,48 @@
 - hosts: all
   become: true
   tasks:
+
+  ##################
+  # Enable UFW #
+  ##################
+  - name: Enabling UFW, allowing all traffic
+    community.general.ufw:
+      state: enabled
+      policy: allow
+
+  ######################
+  # Enable logging UFW #
+  ######################
+  - name: Set logging
+    community.general.ufw:
+      logging: 'on'
+  
+  ##################
+  # open port 80 #
+  ##################
+  - name: Allow all access to port 9090
+    ufw:
+      rule: allow
+      port: '80'
+      proto: tcp
+
+  ##################
+  # open port 443 #
+  ##################
+  - name: Allow all access to port 9100
+    ufw:
+      rule: allow
+      port: '443'
+      proto: tcp
+
+  ##################
+  # open port 853 #
+  ##################
+  - name: Allow all access to port 8080
+    ufw:
+      rule: allow
+      port: '853'
+      proto: tcp
   
   ###############################
   # Creating docker network web #
@@ -39,7 +81,7 @@
   ########################################  
   - name: Create the srv directory if it does not exist
     ansible.builtin.file:
-      path: /home/gregory/srv/traefik/
+      path: ~/srv/traefik/
       state: directory
       mode: '0777'
 
@@ -48,7 +90,7 @@
   ######################################################
   - name: Create the configurations directory if it does not exist
     ansible.builtin.file:
-      path: /home/gregory/srv/traefik/configurations/
+      path: ~/srv/traefik/configurations/
       state: directory
       mode: '0777'
 
@@ -58,7 +100,7 @@
   - name: copy Docker Compose files to remote server
     copy:
       src: /temp/traefik/docker-compose.yml
-      dest: /home/gregory/srv/traefik/
+      dest: ~/srv/traefik/
       remote_src: yes
     loop:
     - docker-compose.yml
@@ -69,7 +111,7 @@
   - name: copy static traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/traefik.yml
-      dest: /home/gregory/srv/traefik/configurations/traefik.yml
+      dest: ~/srv/traefik/configurations/traefik.yml
       remote_src: yes
     loop:
     - traefik.yml
@@ -80,7 +122,7 @@
   - name: copy dynamic traefik config file to remote server
     copy:
       src: /temp/traefik/configurations/dynamic.yml
-      dest: /home/gregory/srv/traefik/configurations/dynamic.yml
+      dest: ~/srv/traefik/configurations/dynamic.yml
       remote_src: yes
     loop:
     - dynamic.yml
@@ -90,7 +132,7 @@
   #######################
   - name: deploy Docker Compose stack on remote server
     docker_compose:
-      project_src: /home/gregory/srv/traefik/
+      project_src: ~/srv/traefik/
       files:
       - docker-compose.yml
       recreate: always
