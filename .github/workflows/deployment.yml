@@ -48,7 +48,7 @@ jobs:
           ###########################
           inventory: |
             [linux]
-            server17a ansible_host=apex-migrations.ddns.net ansible_port=6908
+            server17a ansible_host=${{ secrets.HOST }} ansible_port=${{ secrets.PORT }}
             
             # [azure]
             # app-srv-01 ansible_host=srv-01.westeurope.cloudapp.azure.com ansible_port=22 
