@@ -93,6 +93,7 @@ services:
     networks:
       - web-secure
       - web
+      - monitoring-stack
 
 #####################################################
 # Persisting of my docker network within this stack #
@@ -101,4 +102,6 @@ networks:
   web-secure:
     external: true
   web:
+    external: true
+  monitoring-stack:
     external: true
