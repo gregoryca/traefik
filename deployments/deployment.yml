@@ -9,14 +9,16 @@
   # Enable UFW #
   ##################
   - name: Install ufw firewall
-    community.general.ufw:
-      state: enabled
-      policy: allow
+    ansible.builtin.apt:
+      name: ufw
+      state: present
 
   ######################
   # Enable logging UFW #
   ######################
   - name: Set logging
+    become: yes
+    become_user: root
     community.general.ufw:
       logging: 'on'
   
