@@ -1,12 +1,14 @@
 ---
 - hosts: all
-  become: true
+  become: yes
+  become_user: gregory
+  gather_facts: True
   tasks:
 
   ##################
   # Enable UFW #
   ##################
-  - name: Enabling UFW, allowing all traffic
+  - name: Install ufw firewall
     community.general.ufw:
       state: enabled
       policy: allow
@@ -22,6 +24,8 @@
   # open port 80 #
   ##################
   - name: Allow all access to port 9090
+    become: yes
+    become_user: root
     ufw:
       rule: allow
       port: '80'
@@ -31,6 +35,8 @@
   # open port 443 #
   ##################
   - name: Allow all access to port 9100
+    become: yes
+    become_user: root
     ufw:
       rule: allow
       port: '443'
@@ -40,6 +46,8 @@
   # open port 853 #
   ##################
   - name: Allow all access to port 8080
+    become: yes
+    become_user: root
     ufw:
       rule: allow
       port: '853'
@@ -64,7 +72,7 @@
   #########################################
   - name: Create a temp directory if it does not exist
     ansible.builtin.file:
-      path: /temp/traefik/
+      path: ~/temp/traefik/
       state: directory
       mode: '0777'
 
@@ -74,68 +82,66 @@
   - name: Checkout Git repo in temp directory
     ansible.builtin.git:
       repo: 'https://github.com/gregoryca/traefik.git'
-      dest: /temp/traefik/
+      dest: ~/temp/traefik/
 
   ########################################
   # Creating a srv directory on the host #
   ########################################  
   - name: Create the srv directory if it does not exist
     ansible.builtin.file:
-      path: ~/srv/traefik/
+      path: ~/srv/
       state: directory
       mode: '0777'
 
   ######################################################
   # Creating a the configuration directory on the host #
   ######################################################
-  - name: Create the configurations directory if it does not exist
-    ansible.builtin.file:
-      path: ~/srv/traefik/configurations/
-      state: directory
-      mode: '0777'
+  # - name: Create the configurations directory if it does not exist
+  #   ansible.builtin.file:
+  #     path: ~/srv/traefik/configurations/
+  #     state: directory
+  #     mode: '0777'
 
   #########################
   # Copy the compose file #
   #########################
-  - name: copy Docker Compose files to remote server
+  - name: copy git repo to remote server
     copy:
-      src: /temp/traefik/docker-compose.yml
-      dest: ~/srv/traefik/
+      src: ~/temp/traefik
+      dest: ~/srv/
       remote_src: yes
-    loop:
-    - docker-compose.yml
 
   ###############################
   # Copy the static config file #
   ###############################
-  - name: copy static traefik config file to remote server
-    copy:
-      src: /temp/traefik/configurations/traefik.yml
-      dest: ~/srv/traefik/configurations/traefik.yml
-      remote_src: yes
-    loop:
-    - traefik.yml
+  # - name: copy static traefik config file to remote server
+  #   copy:
+  #     src: /temp/traefik/configurations/traefik.yml
+  #     dest: ~/srv/traefik/configurations/traefik.yml
+  #     remote_src: yes
+  #   loop:
+  #   - traefik.yml
 
   ################################
   # Copy the dynamic config file #
   ################################
-  - name: copy dynamic traefik config file to remote server
-    copy:
-      src: /temp/traefik/configurations/dynamic.yml
-      dest: ~/srv/traefik/configurations/dynamic.yml
-      remote_src: yes
-    loop:
-    - dynamic.yml
+  # - name: copy dynamic traefik config file to remote server
+  #   copy:
+  #     src: /temp/traefik/configurations/dynamic.yml
+  #     dest: ~/srv/traefik/configurations/dynamic.yml
+  #     remote_src: yes
+  #   loop:
+  #   - dynamic.yml
 
   #######################
   # Deploy compose file #
   #######################
-  - name: deploy Docker Compose stack on remote server
-    docker_compose:
-      project_src: ~/srv/traefik/
-      files:
-      - docker-compose.yml
-      recreate: always
+  # - name: deploy Docker Compose stack on remote server
+  #   docker_compose:
+  #     project_src: ~/srv/traefik/
+  #     files:
+  #     - docker-compose.yml
+  #     recreate: always
 
   #########################################
   # Clean up temp folder after deployment #
@@ -143,4 +149,4 @@
   - name: Delete content & directory
     file:
       state: absent
-      path: /temp/
+      path: ~/temp/
