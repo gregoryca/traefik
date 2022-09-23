@@ -95,14 +95,24 @@
       state: directory
       mode: '0777'
 
-  #########################
-  # Copy the compose file #
-  #########################
+  ##########################
+  # Copy the git repo file #
+  ##########################
   - name: copy git repo to remote server
     copy:
       src: ~/temp/traefik
       dest: ~/srv/
       remote_src: yes
+      
+  #######################
+  # Deploy compose file #
+  #######################
+  - name: deploy Docker Compose stack on remote server
+    docker_compose:
+      project_src: ~/srv/traefik/
+      files:
+      - docker-compose.yml
+      recreate: always
 
   #########################################
   # Clean up temp folder after deployment #
