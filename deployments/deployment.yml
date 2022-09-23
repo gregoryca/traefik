@@ -95,15 +95,6 @@
       state: directory
       mode: '0777'
 
-  ######################################################
-  # Creating a the configuration directory on the host #
-  ######################################################
-  # - name: Create the configurations directory if it does not exist
-  #   ansible.builtin.file:
-  #     path: ~/srv/traefik/configurations/
-  #     state: directory
-  #     mode: '0777'
-
   #########################
   # Copy the compose file #
   #########################
@@ -112,38 +103,6 @@
       src: ~/temp/traefik
       dest: ~/srv/
       remote_src: yes
-
-  ###############################
-  # Copy the static config file #
-  ###############################
-  # - name: copy static traefik config file to remote server
-  #   copy:
-  #     src: /temp/traefik/configurations/traefik.yml
-  #     dest: ~/srv/traefik/configurations/traefik.yml
-  #     remote_src: yes
-  #   loop:
-  #   - traefik.yml
-
-  ################################
-  # Copy the dynamic config file #
-  ################################
-  # - name: copy dynamic traefik config file to remote server
-  #   copy:
-  #     src: /temp/traefik/configurations/dynamic.yml
-  #     dest: ~/srv/traefik/configurations/dynamic.yml
-  #     remote_src: yes
-  #   loop:
-  #   - dynamic.yml
-
-  #######################
-  # Deploy compose file #
-  #######################
-  # - name: deploy Docker Compose stack on remote server
-  #   docker_compose:
-  #     project_src: ~/srv/traefik/
-  #     files:
-  #     - docker-compose.yml
-  #     recreate: always
 
   #########################################
   # Clean up temp folder after deployment #
