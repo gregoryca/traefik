@@ -45,7 +45,7 @@ metrics:
       - 5.0
 
 pilot:
-    token: "08debba3-5654-4391-be7a-b0e8b4cae855"
+    token: "insert token here"
 
 # Entry Points configuration
 # ---
@@ -96,7 +96,7 @@ entryPoints:
 certificatesResolvers:
   development:
     acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      email: lala@lala.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
@@ -104,7 +104,7 @@ certificatesResolvers:
         
   production:
     acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      email: lala@lala.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
@@ -112,7 +112,7 @@ certificatesResolvers:
 
   developmenttls:
     acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      email: lala@lala.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
@@ -120,7 +120,7 @@ certificatesResolvers:
 
   productiontls:
     acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      email: lala@lala.com  # TODO: Change this to your email
       storage: /ssl-certs/acme.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
