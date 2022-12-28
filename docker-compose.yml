@@ -36,7 +36,7 @@ services:
       - "80:80"
       - "443:443"
       - "853:853"
-      - "8082:8082"
+      - "8082:8080"
 
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
@@ -58,13 +58,14 @@ services:
 
     labels:
       - "traefik.enable=true"
+
       ####################################################################################
       # this is a domain name i have pointed to my home address via no-ip.               #
       # you can create a no-ip account, and set it up so you have an dynamic DNS address #
       # In your domain you create a new CNAME record for your website                    #
       # After that you point that CNAME record to the dynamic DNS record                 #
       ####################################################################################
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.cloud-migrations.nl`)"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.apex-migrations.net`)"
       ##################################################################################
       # This is my certresolved named: production and can be found in my static config #
       ##################################################################################
@@ -85,7 +86,7 @@ services:
       #####################################################################################################
       # Use this only if you have Authelia deployed in your infra, and is reachable via an docker network #
       #####################################################################################################
-      - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
+      # - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
     
     ########################
     # Defining my networks #

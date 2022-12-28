@@ -15,6 +15,12 @@ accessLog:
 # ---
 api:
   dashboard: true  # true by default
+  insecure: false
+
+tracing:
+  elastic:
+    serverURL: "http://grafana.elasticsearch:9200"
+    serviceEnvironment: "production"
 
 experimental:
   http3: true
@@ -25,8 +31,6 @@ experimental:
     redirect2https:
       moduleName: "github.com/sunalwaysknows/redirect2https"
       version: "v0.0.7"
-
-  hub: true
 
 hub:
   tls:
@@ -59,12 +63,6 @@ entryPoints:
         - "127.0.0.1/32"
         - "192.168.0.0/16"
         - "172.27.0.0/16"
-
-  # traefikhub-api: 
-  #   address: ":9900"
-
-  # traefikhub-tunl: 
-  #   address: ":9901"
     
   web-secure:
     address: ":443"
@@ -96,32 +94,16 @@ entryPoints:
 certificatesResolvers:
   development:
     acme:
-      email: lala@lala.com  # TODO: Change this to your email
-      storage: /ssl-certs/acme.json
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/development.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
         entryPoint: web
         
   production:
     acme:
-      email: lala@lala.com  # TODO: Change this to your email
-      storage: /ssl-certs/acme.json
-      caServer: "https://acme-v02.api.letsencrypt.org/directory"
-      httpChallenge:
-        entryPoint: web
-
-  developmenttls:
-    acme:
-      email: lala@lala.com  # TODO: Change this to your email
-      storage: /ssl-certs/acme.json
-      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-      httpChallenge:
-        entryPoint: web
-
-  productiontls:
-    acme:
-      email: lala@lala.com  # TODO: Change this to your email
-      storage: /ssl-certs/acme.json
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/production.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
         entryPoint: web

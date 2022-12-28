@@ -1,0 +1,36 @@
+---
+- hosts: mgmt-server
+  gather_facts: False
+  tasks:
+
+  #Stopping container
+    - name: Stop the docker container
+      docker_container:
+        name: traefik.rproxy
+        state: stopped
+
+  #Removing/Deleting container
+    - name: Remove container
+      docker_container:
+        name: traefik.rproxy
+        state: absent
+
+  #Removing/Deleting Image
+    - name: Remove image
+      docker_image:
+        name: traefik:latest
+        state: absent
+
+  #Pull latest version Image
+    - name: pull an image
+      docker_image:
+        name: traefik:latest
+        source: pull
+
+  #deploy compose file
+    - name: deploy Docker Compose stack
+      docker_compose:
+        project_src: /home/gregory/srv/traefik/
+        files:
+        - docker-compose.yml
+        recreate: always

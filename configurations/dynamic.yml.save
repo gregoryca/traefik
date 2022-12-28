@@ -33,13 +33,22 @@ tcp:
 # TCP routers #
 ################
   routers:
-
+    ssh:
+      service: server17a-SSH
+      rule: HostSNI(`*`)
+      entryPoints:
+        - web-secure
+        - web
 
 ############################################################################
 # TCP Services being used by TCP Routers                                   #
 # URL can be an internal IP address of docker network, or your homenetwork #
 ############################################################################
   services:
+    server17a-SSH:
+      loadBalancer:
+        servers:
+          - url: ftp://192.168.2.100:22
 
 http:
 ####################
@@ -76,6 +85,20 @@ http:
 # HTTP routers #
 ################
   routers:
+    opencart-dev:
+      service: opencart-dev
+      rule: Host(`opencartdev.cloud-migrations.nl`)
+      entryPoints:
+        - web
+        - web-secure
+
+    homeassistant:
+      service: homeassistant
+      rule: Host(`genie.local`)
+      entryPoints:
+        - web
+        - web-secure
+
     traefik-secure:
       service: api@internal
       rule: Host(`traefik.local`)
@@ -87,30 +110,28 @@ http:
       ################################################
       tls:
         certResolver: production
-      middlewares:
-          - authelia-secure@docker
-
-  router-secure:
-      service: router
-      rule: Host(`router.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-        - web
-      ################################################  
-      # Adding TLS to the endpoint for https traffic #
-      ################################################
-      tls:
-        certResolver: production
+      # middlewares:
+      #     - authelia-secure@docker
 
 ############################################################################
 # Services being used by Routers                                           #
 # URL can be an internal IP address of docker network, or your homenetwork #
 ############################################################################
   services:
-    router:
+    opencart-dev:
       loadBalancer:
         servers:
-          - url: http://192.168.2.1:80
+          - url: http://192.168.2.145:80
+
+    homeassistant:
+      loadBalancer:
+        servers:
+          - url: http://192.168.2.100:3000
+          
+    uptime-kuma-monitoring:
+      loadBalancer:
+        servers:
+          - url: http://192.168.2.100:2375
           
 ####################################
 # TLS options and cypher specified #
