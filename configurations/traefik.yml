@@ -116,10 +116,11 @@ providers:
 # DOCKER:
 # ---
   file:
-    directory: /configurations/
+    directory: /configurations
     watch: true
 
   docker:
     exposedByDefault: true  # Default is true
+    endpoint: "unix:///var/run/docker.sock"
     network: web-secure
     watch: true

@@ -1,47 +1,23 @@
-tcp:
-###################
-# TCP Middlewares #
-###################
-  middlewares:
-    real-ip-foo:
-      plugin:
-        real-ip:
-          Proxy:
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: mf-fun
-              realIP: X-Forwarded-For
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: mf-bar
-              realIP: Client-Ip
-              OverwriteXFF: true # default: false, v1.0.2 or above
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: cf-foo
-              realIP: Cf-Connecting-Ip
-              OverwriteXFF: true # default: false, v1.0.2 or above
-            - proxyHeadername: "*"
-              realIP: RemoteAddr
-
-    ################################
-    # Redirect to https middleware #
-    ################################
-    my-redirect2https:
-      plugin:
-        redirect2https:
-            permanent: "true"
-
+http:
 #################            
-# TCP routers #
+# HTTP routers #
 ################
   routers:
+    router-unsecure:
+      service: router
+      rule: Host(`router.apex-migrations.net`)
+      entryPoints:
+        - web
+      middlewares:
+        - real-ip-foo
 
+    cadvisor-dashboard:
+      service: cadvisor
+      rule: Host(`cadvisor.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+        - web
 
-############################################################################
-# TCP Services being used by TCP Routers                                   #
-# URL can be an internal IP address of docker network, or your homenetwork #
-############################################################################
-  services:
-
-http:
 ####################
 # HTTP Middlewares #
 ####################
@@ -72,36 +48,6 @@ http:
         redirect2https:
             permanent: "true"
 
-#################            
-# HTTP routers #
-################
-  routers:
-    traefik-secure:
-      service: api@internal
-      rule: Host(`traefik.local`)
-      entryPoints:
-        - web-secure
-        - web
-      ################################################  
-      # Adding TLS to the endpoint for https traffic #
-      ################################################
-      tls:
-        certResolver: production
-      middlewares:
-          - authelia-secure@docker
-
-  router-secure:
-      service: router
-      rule: Host(`router.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-        - web
-      ################################################  
-      # Adding TLS to the endpoint for https traffic #
-      ################################################
-      tls:
-        certResolver: production
-
 ############################################################################
 # Services being used by Routers                                           #
 # URL can be an internal IP address of docker network, or your homenetwork #
@@ -111,6 +57,19 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.2.1:80
+        passHostHeader: false
+        # When sticky sessions are enabled, a Set-Cookie header is set on the initial response to let the client know which server handles the first response.
+        sticky:
+         cookie:
+            name: my_sticky_cookie
+            secure: true
+            httpOnly: true
+
+    cadvisor:
+      loadBalancer:
+        servers:
+          - url: http://192.168.2.100:8080
+        passHostHeader: false
           
 ####################################
 # TLS options and cypher specified #
