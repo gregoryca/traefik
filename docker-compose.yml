@@ -71,6 +71,8 @@ services:
       ##################################################################################
       - "traefik.http.routers.traefik-secure.tls.certresolver=production"
       - "traefik.http.routers.traefik-secure.tls=true"
+      - traefik.http.routers.traefik-secure.tls.domains[0].main=apex-migrations.net
+      - traefik.http.routers.traefik-secure.tls.domains[0].sans=*.apex-migrations.net
       ################################
       # Port to traefik dashboard UI #
       ################################
