@@ -30,7 +30,7 @@
   #deploy compose file
     - name: deploy Docker Compose stack
       docker_compose:
-        project_src: /home/gregory/srv/traefik/
+        project_src: ~/srv/traefik/
         files:
         - docker-compose.yml
         recreate: always
