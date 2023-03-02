@@ -1,0 +1,50 @@
+########################################################
+# This is a basic workflow to Deploy a Nextcloud stack #
+########################################################
+name: Upgrade Traefik infra
+
+on:
+  #################################################################
+  # Allows you to run this workflow manually from the Actions tab #
+  #################################################################
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      #################################################################################
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it #
+      #################################################################################
+      - name: Run upgrade playbook
+        uses: actions/checkout@v3
+
+      #####################################################################
+      # Deploys an ansible script to manage the traefik stack deployment #
+      #####################################################################
+      - uses: dawidd6/action-ansible-playbook@v2
+        name: Upgrade Traefik
+        with:
+          ###############################
+          # Required, playbook filepath #
+          ###############################
+          playbook: upgrade.yml
+          ############################################
+          # Optional, directory where playbooks live #
+          ############################################
+          directory: ./deployments
+          ###################
+          # SSH private key #
+          ###################
+          key: ${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}
+          ###########################
+          # inventory file contents #
+          ###########################
+          inventory: |
+            [linux]
+            server17a ansible_host=${{ secrets.HOST }} ansible_port=${{ secrets.PORT }}
+
+            [linux:vars]
+            ansible_user = ${{ secrets.USERNAME }}
+            ansible_sudo_pass = ${{ secrets.PASSWORD }}
