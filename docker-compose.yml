@@ -36,7 +36,7 @@ services:
       - "80:80"
       - "443:443"
       - "853:853"
-      - "8082:8080"
+      - "8080:8080"
 
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
@@ -47,6 +47,10 @@ services:
       # This is to save my ssl certifcates locally #
       ##############################################
       - "./traefik-ssl-certs:/ssl-certs"
+      ######################################
+      # mountpoint for traefik access logs #
+      ######################################
+      - "./logs/:/var/log/traefik/"
       #################################
       # This is for my dynamic config #
       #################################

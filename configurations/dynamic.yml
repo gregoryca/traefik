@@ -7,16 +7,29 @@ http:
       service: router
       rule: Host(`router.apex-migrations.net`)
       entryPoints:
-        - web
+        - web-secure
       middlewares:
         - real-ip-foo
+      tls:
+        options: tls
 
-    cadvisor-dashboard:
-      service: cadvisor
-      rule: Host(`cadvisor.apex-migrations.net`)
+    traefik-logs:
+      service: traefik-logs
+      rule: Host(`traefiklogs.apex-migrations.net`)
       entryPoints:
         - web-secure
-        - web
+      middlewares:
+        - real-ip-foo
+      tls:
+        options: tls
+
+    prometheus-dashboard:
+      service: prometheus
+      rule: Host(`prometheus.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      tls:
+        options: tls
 
 ####################
 # HTTP Middlewares #
@@ -65,10 +78,16 @@ http:
             secure: true
             httpOnly: true
 
-    cadvisor:
+    prometheus:
       loadBalancer:
         servers:
-          - url: http://192.168.2.100:8080
+          - url: http://192.168.2.100:9090
+        passHostHeader: false
+
+    traefik-logs:
+      loadBalancer:
+        servers:
+          - url: http://traefik.rproxy:80
         passHostHeader: false
           
 ####################################
