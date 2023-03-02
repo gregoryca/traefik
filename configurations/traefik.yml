@@ -15,7 +15,7 @@ accessLog:
       statusCodes:
         - "200"
         - "300-302"
-    retryAttempts: true
+      retryAttempts: true
     fields:
       defaultMode: keep
       names:
