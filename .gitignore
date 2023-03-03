@@ -1,8 +1,0 @@
-traefik-ssl-certs/acme.json
-temp
-deployments/inventory
-deployments/ansible.cfg
-.gitignore
-traefik-ssl-certs/development.json
-traefik-ssl-certs/production.json
-/logs/
