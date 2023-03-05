@@ -3,19 +3,9 @@ http:
 # HTTP routers #
 ################
   routers:
-    router-unsecure:
+    router-secure:
       service: router
       rule: Host(`router.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo
-      tls:
-        options: tls
-
-    traefik-logs:
-      service: traefik-logs
-      rule: Host(`traefiklogs.apex-migrations.net`)
       entryPoints:
         - web-secure
       middlewares:
@@ -26,6 +16,14 @@ http:
     prometheus-dashboard:
       service: prometheus
       rule: Host(`prometheus.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      tls:
+        options: tls
+
+    cadvisor:
+      service: cadvisor
+      rule: Host(`cadvisor.apex-migrations.net`)
       entryPoints:
         - web-secure
       tls:
@@ -61,11 +59,13 @@ http:
         redirect2https:
             permanent: "true"
 
-############################################################################
-# Services being used by Routers                                           #
-# URL can be an internal IP address of docker network, or your homenetwork #
-############################################################################
+###############################################################################
+# URL can be an hostname/ip of docker container, or ip address on the network #
+###############################################################################
   services:
+#################            
+# HTTP services #
+#################
     router:
       loadBalancer:
         servers:
@@ -81,13 +81,13 @@ http:
     prometheus:
       loadBalancer:
         servers:
-          - url: http://192.168.2.100:9090
+          - url: http://grafana.prometheus:9090
         passHostHeader: false
 
-    traefik-logs:
+    cadvisor:
       loadBalancer:
         servers:
-          - url: http://traefik.rproxy:80
+          - url: http://grafana.cadvisor:8080
         passHostHeader: false
           
 ####################################
