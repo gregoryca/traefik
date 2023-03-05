@@ -29,6 +29,14 @@ http:
       tls:
         options: tls
 
+    traefik-metrics:
+      service: traefik-metrics
+      rule: Host(`traefikmetrics.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      tls:
+        options: tls
+
 ####################
 # HTTP Middlewares #
 ####################
@@ -59,6 +67,13 @@ http:
         redirect2https:
             permanent: "true"
 
+    traefik-container-manager:
+      plugin:
+        traefik-container-manager:
+            name: ansible-ui
+            serviceUrl: https://ansible.apex-migrations.net
+            timeout: "60"
+
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #
 ###############################################################################
@@ -88,6 +103,12 @@ http:
       loadBalancer:
         servers:
           - url: http://grafana.cadvisor:8080
+        passHostHeader: false
+
+    traefik-metrics:
+      loadBalancer:
+        servers:
+          - url: http://traefik.rproxy:8080
         passHostHeader: false
           
 ####################################
