@@ -36,7 +36,6 @@ services:
       - "80:80" # Web
       - "443:443" # Web-Secure
       - "853:853" #DNS over TLS
-      - "8080:8080" #Metrics for Grafana
 
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
