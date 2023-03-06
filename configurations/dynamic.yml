@@ -11,7 +11,7 @@ http:
       middlewares:
         - real-ip-foo
       tls:
-        options: tls
+        certResolver: production
 
     prometheus-dashboard:
       service: prometheus
@@ -19,7 +19,7 @@ http:
       entryPoints:
         - web-secure
       tls:
-        options: tls
+        certResolver: production
 
     cadvisor:
       service: cadvisor
@@ -27,7 +27,7 @@ http:
       entryPoints:
         - web-secure
       tls:
-        options: tls
+        certResolver: production
 
 ####################
 # HTTP Middlewares #
@@ -81,7 +81,7 @@ http:
         # When sticky sessions are enabled, a Set-Cookie header is set on the initial response to let the client know which server handles the first response.
         sticky:
          cookie:
-            name: my_sticky_cookie
+            name: sticky_cookie
             secure: true
             httpOnly: true
 
@@ -95,20 +95,27 @@ http:
       loadBalancer:
         servers:
           - url: http://grafana.cadvisor:8080
-        passHostHeader: true
+        passHostHeader: false
           
 ####################################
 # TLS options and cypher specified #
 ####################################
 tls:
+  certificates:
+    - certFile: /traefik-ssl-certs/apex-migrations.cert
+      keyFile: /traefik-ssl-certs/apex-migrations.key
+      stores:
+        - defaultStore
   stores:
-    default:
+    defaultStore:
       defaultGeneratedCert:
         resolver: production
         domain:
           main: apex-migrations.net
+          # sans:
+          #     - "*.apex-migrations.net"
   options:
-    tls:
+    defaultOptions:
       minVersion: VersionTLS12
       cipherSuites:
         - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
