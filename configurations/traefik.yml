@@ -16,7 +16,7 @@ accessLog:
         - "200"
         - "300-302"
     fields:
-      defaultMode: keep
+      defaultMode: drop
       names:
         ClientUsername: drop
         ClientHost: keep
