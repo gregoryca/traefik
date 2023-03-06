@@ -118,15 +118,7 @@ entryPoints:
 # ---
 # TODO: Custmoize your Cert Resolvers and Domain settings
 # 
-certificatesResolvers:
-  development:
-    acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
-      storage: /ssl-certs/development.json
-      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-      httpChallenge:
-        entryPoint: web
-        
+certificatesResolvers:       
   production:
     acme:
       email: aquiles.craane@gmail.com  # TODO: Change this to your email
