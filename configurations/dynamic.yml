@@ -29,14 +29,6 @@ http:
       tls:
         options: tls
 
-    traefik-metrics:
-      service: traefik-metrics
-      rule: Host(`traefikmetrics.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      tls:
-        options: tls
-
 ####################
 # HTTP Middlewares #
 ####################
@@ -103,18 +95,18 @@ http:
       loadBalancer:
         servers:
           - url: http://grafana.cadvisor:8080
-        passHostHeader: false
-
-    traefik-metrics:
-      loadBalancer:
-        servers:
-          - url: http://traefik.rproxy:8080
-        passHostHeader: false
+        passHostHeader: true
           
 ####################################
 # TLS options and cypher specified #
 ####################################
 tls:
+  stores:
+    default:
+      defaultGeneratedCert:
+        resolver: production
+        domain:
+          main: apex-migrations.net
   options:
     tls:
       minVersion: VersionTLS12
