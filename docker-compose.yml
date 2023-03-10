@@ -36,7 +36,8 @@ services:
       - "80:80" # Web
       - "443:443" # Web-Secure
       - "853:853" #DNS over TLS
-
+    environment:
+      - BINDMAN_MANAGER_ADDRESS=bindman.listener
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
     ###############################################################
@@ -57,7 +58,7 @@ services:
       ########################################
       # This is for my traefik static config #
       ########################################
-      - "./configurations/:/etc/traefik/"      
+      - "./configurations/:/etc/traefik/"
 
     labels:
       - "traefik.enable=true"
@@ -74,8 +75,8 @@ services:
       ##################################################################################
       - "traefik.http.routers.traefik-secure.tls.certresolver=production"
       - "traefik.http.routers.traefik-secure.tls=true"
-      - traefik.http.routers.traefik-secure.tls.domains[0].main=${domain}
-      - traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${domain}
+      #- traefik.http.routers.traefik-secure.tls.domains[0].main=${domain}
+      # - traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${domain}
       ################################
       # Port to traefik dashboard UI #
       ################################
@@ -92,13 +93,9 @@ services:
       # Use this only if you have Authelia deployed in your infra, and is reachable via an docker network #
       #####################################################################################################
       - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
-    
-    ########################
-    # Defining my networks #
-    ########################
     networks:
-      - web-secure
       - web
+      - web-secure
       - monitoring-stack
 
 #####################################################

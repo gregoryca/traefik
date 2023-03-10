@@ -127,6 +127,13 @@ certificatesResolvers:
       httpChallenge:
         entryPoint: web
 
+  dnsChallenge:
+    acme:
+      email: aquiles.craane@gmail.com  # TODO: Change this to your email
+      storage: /ssl-certs/production.json
+      dnschallenge:
+        provider: bindman
+
 # Provider Configuration
 # ---
 # TODO: Customize your Provider Settings if needed
