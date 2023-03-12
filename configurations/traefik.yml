@@ -10,7 +10,7 @@ log:
 accessLog:
   format: json  # common, json, logfmt
   filePath: /var/log/traefik/access.log
-  bufferingSize: 100
+  bufferingSize: 50
   filters:
     statusCodes:
       - "200"
