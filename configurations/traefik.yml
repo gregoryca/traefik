@@ -27,7 +27,7 @@ accessLog:
       RequestPath: keep
       RequestProtocol: keep
       entryPointName: keep
-      DownstreamContentSize: drop
+      DownstreamContentSize: keep
       Duration: drop
       OriginContentSize: drop
       Overhead: drop
