@@ -8,29 +8,29 @@ log:
 # (Optional) Accesslog
 # ---
 accessLog:
-    format: json  # common, json, logfmt
-    filePath: /var/log/traefik/access.log
-    bufferingSize: 100
-    filters:
-      statusCodes:
-        - "200"
-        - "300-302"
-    fields:
-      defaultMode: drop
-      names:
-        ClientUsername: drop
-        ClientHost: keep
-        RequestAddr: keep
-        RequestCount: keep
-        RequestHost: keep
-        RequestMethod: keep
-        RequestPath: keep
-        RequestProtocol: keep
-        entryPointName: keep
-        DownstreamContentSize: drop
-        Duration: drop
-        OriginContentSize: drop
-        Overhead: drop
+  format: json  # common, json, logfmt
+  filePath: /var/log/traefik/access.log
+  bufferingSize: 100
+  filters:
+    statusCodes:
+      - "200"
+      - "300-302"
+  fields:
+    defaultMode: drop
+    names:
+      ClientUsername: drop
+      ClientHost: keep
+      RequestAddr: keep
+      RequestCount: keep
+      RequestHost: keep
+      RequestMethod: keep
+      RequestPath: keep
+      RequestProtocol: keep
+      entryPointName: keep
+      DownstreamContentSize: drop
+      Duration: drop
+      OriginContentSize: drop
+      Overhead: drop
 
 # (Optional) Enable API and Dashboard
 # ---

@@ -75,8 +75,6 @@ services:
       ##################################################################################
       - "traefik.http.routers.traefik-secure.tls.certresolver=production"
       - "traefik.http.routers.traefik-secure.tls=true"
-      #- traefik.http.routers.traefik-secure.tls.domains[0].main=${domain}
-      # - traefik.http.routers.traefik-secure.tls.domains[0].sans=*.${domain}
       ################################
       # Port to traefik dashboard UI #
       ################################
