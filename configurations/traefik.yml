@@ -18,7 +18,7 @@ accessLog:
   fields:
     defaultMode: drop
     names:
-      ClientUsername: drop
+      ClientUsername: keep
       ClientHost: keep
       RequestAddr: keep
       RequestCount: keep
