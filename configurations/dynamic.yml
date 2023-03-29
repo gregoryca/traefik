@@ -14,6 +14,16 @@ http:
       tls:
         certResolver: production
 
+    traefik-dashboard:
+      service: api@internal
+      rule: Host(`traefik.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - authelia-secure@docker
+      tls:
+        certResolver: production
+
     prometheus-dashboard:
       service: prometheus
       rule: Host(`prometheus.apex-migrations.net`)
