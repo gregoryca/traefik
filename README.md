@@ -36,6 +36,9 @@ url=`subdomain.domainname`
 port=port to your traefik service
 domain=FQDN
 
+4 - **create docker networks for manual deployment**
+Make sure to manually create the networks traefik will use before the manual deployment.
+
 ## Installation
 
 Fork this project with GitHub
@@ -64,3 +67,7 @@ The master branch will trigger the pipeline for deployment. Or you can dispatch 
 ## Trigger Deployment
 Select the work flow you want to trigger and press the blue underscored button.
 ![page 3](https://user-images.githubusercontent.com/10562868/187654844-c20de884-21b2-4df1-86a6-a2a221497483.PNG)
+
+## Ansible Deployment
+Another way to create a deployment is to download the following file: /deployments/deployment.yml
+Make sure Ansible is installed on the target server and change the variables in my ansible script to reflect your own environment (like the become user)
