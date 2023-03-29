@@ -29,6 +29,13 @@ The intergrate.yml can be found under: ./FORKED REPO/.github/workflows
 Feel free to add, or change the ansible deployment script according to your needs.
 Do not forget to change the traefik URL in the docker-compose file, to a C-NAME record which points to your public IP using DynDNS (DDNS)
 
+3 - Env file for deployment
+Make sure to define a .env file in the Root with the following schema:
+
+url=`subdomain.domainname`
+port=port to your traefik service
+domain=FQDN
+
 ## Installation
 
 Fork this project with GitHub
@@ -37,7 +44,6 @@ Fork this project with GitHub
   git clone git@github.com:USERNAME/FORKED-PROJECT.git
   cd /path/to/FORKED-PROJECT
 ```
-
 
 ## Deployment
 
