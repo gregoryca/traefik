@@ -10,6 +10,7 @@ http:
         - web-secure
       middlewares:
         - real-ip-foo
+        - authelia-secure@docker
       tls:
         certResolver: production
 
@@ -18,12 +19,16 @@ http:
       rule: Host(`prometheus.apex-migrations.net`)
       entryPoints:
         - web-secure
+      middlewares:
+        - authelia-secure@docker
       tls:
         certResolver: production
 
     cadvisor:
       service: cadvisor
       rule: Host(`cadvisor.apex-migrations.net`)
+      middlewares:
+        - authelia-secure@docker
       entryPoints:
         - web-secure
       tls:
