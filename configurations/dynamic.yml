@@ -117,6 +117,7 @@ tls:
         resolver: production
         domain:
           main: apex-migrations.net
+          # Still need to enable DNS challenge for wildcard domain certificates
           # sans:
           #     - "*.apex-migrations.net"
   options:
