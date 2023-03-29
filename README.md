@@ -11,14 +11,14 @@ There are a few prerequisites before deployment.
 
 ## Prerequisites
 
-1 - GitHub secrets for usage
+1 - **GitHub secrets for usage**
 
 To create GitHub secrets follow this link: <https://docs.github.com/en/actions/security-guides/encrypted-secrets>
 
 The following secrets are used for deployment:
 ![secrets](https://user-images.githubusercontent.com/10562868/187651966-85bd7898-1f7d-4fec-9e8e-56567171aa34.PNG)
 
-2 - Target server(s) reachable via ssh over the internet
+2 - **Target server(s) reachable via ssh over the internet**
 
 Also make sure that your forked repo has the right inventory secrets defined. 
 If not, the intergrate.yml pipeline can't run on the target server(s)
@@ -29,7 +29,7 @@ The intergrate.yml can be found under: ./FORKED REPO/.github/workflows
 Feel free to add, or change the ansible deployment script according to your needs.
 Do not forget to change the traefik URL in the docker-compose file, to a C-NAME record which points to your public IP using DynDNS (DDNS)
 
-3 - Env file for deployment
+3 - **Env file for deployment**
 Make sure to define a .env file in the Root with the following schema:
 
 url=`subdomain.domainname`
