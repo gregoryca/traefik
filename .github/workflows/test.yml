@@ -1,0 +1,47 @@
+name: Run tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup env
+        run: |
+          echo "PROJECT_ROOT=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+          echo "PROJECT_NAME=combine" >> $GITHUB_ENV
+          echo "${GITHUB_WORKSPACE}/bin" >> $GITHUB_PATH
+
+      - name: Start docker containers
+        run: |
+          echo "VERSION=$(versioninfo)" >> $GITHUB_ENV
+          docker-compose -f tests-docker-compose.yml up --build --detach
+          sleep 10  # wait for database to be ready
+          docker-compose -f tests-docker-compose.yml run backend bash -c "rails db:create && rails db:migrate && rails db:seed"
+
+      - name: Run backend unit and integration tests
+        run: |
+          docker-compose -f tests-docker-compose.yml run backend rails test
+
+      - name: Run cypress e2e tests
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: test
+          wait-on: "http://localhost:8080"
+
+      - if: always()
+        uses: ouzi-dev/commit-status-updater@v1.1.0
+        with:
+          name: "Run tests"
+          status: "${{ job.status }}"
