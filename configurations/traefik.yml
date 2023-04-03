@@ -59,6 +59,10 @@ experimental:
       moduleName: github.com/adyanth/traefik-container-manager
       version: "v0.1.2"
 
+    fail2ban:
+      moduleName: "github.com/tomMoulard/fail2ban"
+      version: "v0.6.6"
+
 hub:
   tls:
     insecure: true
@@ -100,6 +104,10 @@ entryPoints:
         - "127.0.0.1/32"
         - "192.168.0.0/16"
         - "172.27.0.0/16"
+      middlewares:
+        - real-ip-foo@file
+        - fail2ban
+
 
   dnsovertls:
     address: ":853"
