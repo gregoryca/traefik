@@ -5,21 +5,20 @@ services:
   # Traefik Hub-Agent #
   #####################
   # hub-agent:
-  #   image: ghcr.io/traefik/hub-agent-traefik:experimental
+  #   image: ghcr.io/traefik/hub-agent-traefik:v1.1.0
   #   pull_policy: always
   #   container_name: hub-agent
   #   restart: "on-failure"
   #   command:
   #     - run
-  #     - --hub.token=11f5a6f3-04d4-4034-beab-9a4e13505bea
+  #     - --hub.token=df6405a1-8d44-4daf-a007-341aa72afecd
   #     - --auth-server.advertise-url=http://hub-agent
-  #     - --traefik.host=${url}
-  #     - --traefik.tls.insecure=false
+  #     - --traefik.host=traefik.apex-migrations.net
+  #     - --traefik.tls.insecure=true
   #   volumes:
   #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
   #   networks:
-  #     - web-secure
-  #     - web
+  #     - traefik-hub
 
   #########################
   # Traefik reverse proxy #
@@ -74,4 +73,6 @@ networks:
   web:
     external: true
   monitoring-stack:
+    external: true
+  traefik-hub:
     external: true

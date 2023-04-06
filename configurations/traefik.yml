@@ -45,6 +45,7 @@ tracing:
 
 experimental:
   http3: true
+  hub: true
 
   plugins:
     real-ip:
@@ -80,7 +81,7 @@ metrics:
       - 5.0
 
 pilot:
-    token: "insert token here"
+    token: "df6405a1-8d44-4daf-a007-341aa72afecd"
 
 # Entry Points configuration
 # ---
@@ -104,9 +105,9 @@ entryPoints:
         - "127.0.0.1/32"
         - "192.168.0.0/16"
         - "172.27.0.0/16"
-      middlewares:
-        - real-ip-foo@file
-        - fail2ban
+    # middlewares:
+    #   - real-ip-foo@file
+    #   - fail2ban
 
 
   dnsovertls:
@@ -121,6 +122,8 @@ entryPoints:
   metrics:
     address: ":8082"
 
+  traefikhub-api: 
+    address: ":9900"
 
 # Certificates configuration
 # ---
