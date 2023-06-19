@@ -1,5 +1,5 @@
 ---
-- hosts: mgmt-server
+- hosts: all
   gather_facts: False
   tasks:
 
