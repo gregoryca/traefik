@@ -1,7 +1,7 @@
 # (Optional) Log information
 # ---
 log:
-  level: ERROR  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
   format: json  # common, json, logfmt
   filePath: /var/log/traefik/traefik.log
 
@@ -31,6 +31,12 @@ accessLog:
       Duration: drop
       OriginContentSize: drop
       Overhead: drop
+    headers:
+      defaultMode: keep
+      names:
+        User-Agent: redact
+        Authorization: keep
+        Content-Type: keep
 
 # (Optional) Enable API and Dashboard
 # ---
