@@ -4,21 +4,25 @@ services:
   #####################
   # Traefik Hub-Agent #
   #####################
-  # hub-agent:
-  #   image: ghcr.io/traefik/hub-agent-traefik:v1.1.0
-  #   pull_policy: always
-  #   container_name: hub-agent
-  #   restart: "on-failure"
-  #   command:
-  #     - run
-  #     - --hub.token=df6405a1-8d44-4daf-a007-341aa72afecd
-  #     - --auth-server.advertise-url=http://hub-agent
-  #     - --traefik.host=traefik.apex-migrations.net
-  #     - --traefik.tls.insecure=true
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
-  #   networks:
-  #     - traefik-hub
+  hub-agent:
+    image: ghcr.io/traefik/hub-agent-traefik:v1.1.0
+    pull_policy: always
+    container_name: hub-agent
+    restart: "on-failure"
+    command:
+      - run
+      - --hub.token={{token}}
+      - --auth-server.advertise-url=http://hub-agent
+      - --traefik.host=traefik.rproxy
+      - --traefik.tls.insecure=true
+      - --hub.url=https://platform.hub.traefik.io/agent
+      - --hub.ui.url=https://hub.traefik.io
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - web-secure
+    depends_on:
+      - traefik.rproxy
 
   #########################
   # Traefik reverse proxy #
@@ -67,12 +71,10 @@ services:
 #####################################################
 # Persisting of my docker network within this stack #
 #####################################################
-networks: 
+networks:
   web-secure:
     external: true
   web:
     external: true
   monitoring-stack:
-    external: true
-  traefik-hub:
     external: true
