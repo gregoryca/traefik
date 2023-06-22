@@ -115,9 +115,10 @@ http:
     fail2ban:
       plugin:
           fail2ban:
+              logLevel: "INFO"
               blacklist:
-                  ip:
-                      - 192.168.0.0/24
+                ip:
+                    - 192.168.0.0/24
               rules:
                   action: ""
                   actionAbuseipdb: ""
@@ -126,7 +127,7 @@ http:
                   banactionAllports: ""
                   bantime: 3h
                   chain: ""
-                  destemail: ""
+                  destemail: "aquiles.craane@gmail.com"
                   enabled: "true"
                   fail2banAgent: ""
                   filter: ""
@@ -142,12 +143,13 @@ http:
                   urlregexp: ""
                   usedns: "192.168.2.100"
               whitelist:
-                  ip:
-                      - ::1
-                      - 127.0.0.1
-                      - "127.0.0.1/32"
-                      - "192.168.0.0/16"
-                      - "172.27.0.0/16"
+                ip:
+                  - ::1
+                  - 127.0.0.1
+                  - "127.0.0.1/32"
+                  - "192.168.2.100/16"
+                  - "172.21.0.0/16"
+                  - "77.173.242.71"
 
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #
