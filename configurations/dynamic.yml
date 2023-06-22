@@ -9,8 +9,9 @@ http:
       entryPoints:
         - web-secure
       middlewares:
-        - real-ip-foo
+        - real-ip-foo@file
         - authelia-secure@docker
+        - IP2Location@file
       tls:
         certResolver: production
 
@@ -21,6 +22,8 @@ http:
         - web-secure
       middlewares:
         - authelia-secure@docker
+        - IP2Location@file
+        # - real-ip-foo@file
       tls:
         certResolver: production
 
@@ -73,6 +76,34 @@ http:
       plugin:
         redirect2https:
             permanent: "true"
+
+    IP2Location:
+      plugin:
+        ip2location:
+          filename: /configurations/database.bin
+          fromHeader: X-User-IP # optional
+          disableErrorHeader: false
+          headers:
+            CountryShort: X-GEO-CountryShort
+            CountryLong: X-GEO-CountryLong
+            Region: X-GEO-Region
+            City: X-GEO-City
+            Isp: X-GEO-Isp
+            Latitude: X-GEO-Latitude
+            Longitude: X-GEO-Longitude
+            Domain: X-GEO-Domain
+            Zipcode: X-GEO-Zipcode
+            Timezone: X-GEO-Timezone
+            Netspeed: X-GEO-Netspeed
+            Iddcode: X-GEO-Iddcode
+            Areacode: X-GEO-Areacode
+            Weatherstationcode: X-GEO-Weatherstationcode
+            Weatherstationname: X-GEO-Weatherstationname
+            Mcc: X-GEO-Mcc
+            Mnc: X-GEO-Mnc
+            Mobilebrand: X-GEO-Mobilebrand
+            Elevation: X-GEO-Elevation
+            Usagetype: X-GEO-Usagetype
 
     traefik-container-manager:
       plugin:

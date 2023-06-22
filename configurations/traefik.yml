@@ -64,6 +64,10 @@ experimental:
       moduleName: "github.com/tomMoulard/fail2ban"
       version: "v0.6.6"
 
+    ip2location:
+      modulename: github.com/negasus/traefik-plugin-ip2location
+      version: v0.1.0
+
 hub:
   tls:
     insecure: true

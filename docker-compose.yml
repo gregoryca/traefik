@@ -11,7 +11,7 @@ services:
     restart: "on-failure"
     command:
       - run
-      - --hub.token={{token}}
+      - --hub.token=${token}
       - --auth-server.advertise-url=http://hub-agent
       - --traefik.host=traefik.rproxy
       - --traefik.tls.insecure=true
