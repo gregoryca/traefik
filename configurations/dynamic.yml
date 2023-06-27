@@ -82,7 +82,7 @@ http:
     IP2Location:
       plugin:
         ip2location:
-          filename: /configurations/database.bin
+          filename: /configurations/database.BIN
           fromHeader: X-User-IP # optional
           disableErrorHeader: false
           headers:
@@ -152,6 +152,7 @@ http:
                   - "192.168.2.100/16"
                   - "172.21.0.0/16"
                   - "77.173.242.71"
+                  - "143.178.33.85"
 
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #
