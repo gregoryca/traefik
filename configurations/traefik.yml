@@ -116,10 +116,9 @@ entryPoints:
         - "192.168.0.0/16"
         - "172.27.0.0/16"
         - "143.178.33.85"
-    # middlewares:
-    #   - real-ip-foo@file
-    #   - fail2ban
-
+    middlewares:
+      - IP2Location@file
+      - fail2ban@file
 
   dnsovertls:
     address: ":853"
