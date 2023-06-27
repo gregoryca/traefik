@@ -6,3 +6,5 @@ traefik-ssl-certs/development.json
 traefik-ssl-certs/production.json
 /logs/
 .env
+configurations/IP2LOCATION-LITE-DB11.BIN
+configurations/IP2LOCATION-LITE-DB11.CSV
