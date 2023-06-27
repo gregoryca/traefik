@@ -23,7 +23,7 @@ http:
       middlewares:
         - authelia-secure@docker
         - IP2Location@file
-        # - real-ip-foo@file
+        - real-ip-foo@file
       tls:
         certResolver: production
 
