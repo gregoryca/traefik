@@ -34,6 +34,7 @@ http:
         - web-secure
       middlewares:
         - authelia-secure@docker
+        - IP2Location@file
       tls:
         certResolver: production
 
@@ -41,7 +42,8 @@ http:
       service: cadvisor
       rule: Host(`cadvisor.apex-migrations.net`)
       middlewares:
-        - authelia-secure@docker
+        - authelia-secure@docker 
+        - IP2Location@file
       entryPoints:
         - web-secure
       tls:
