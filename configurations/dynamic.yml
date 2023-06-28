@@ -71,9 +71,6 @@ http:
             - proxyHeadername: "*"
               realIP: RemoteAddr
 
-    ################################
-    # Redirect to https middleware #
-    ################################
     my-redirect2https:
       plugin:
         redirect2https:
@@ -82,30 +79,23 @@ http:
     IP2Location:
       plugin:
         ip2location:
-          filename: /configurations/database.BIN
-          fromHeader: X-User-IP # optional
+          filename: /configurations/IP2LOCATION-LITE-DB11.BIN
+          fromHeader: X-Real-IP # optional
           disableErrorHeader: false
           headers:
             CountryShort: X-GEO-CountryShort
             CountryLong: X-GEO-CountryLong
             Region: X-GEO-Region
             City: X-GEO-City
-            Isp: X-GEO-Isp
+            #Isp: X-GEO-Isp
             Latitude: X-GEO-Latitude
             Longitude: X-GEO-Longitude
-            Domain: X-GEO-Domain
+            #Domain: X-GEO-Domain
             Zipcode: X-GEO-Zipcode
             Timezone: X-GEO-Timezone
-            Netspeed: X-GEO-Netspeed
-            Iddcode: X-GEO-Iddcode
-            Areacode: X-GEO-Areacode
-            Weatherstationcode: X-GEO-Weatherstationcode
-            Weatherstationname: X-GEO-Weatherstationname
-            Mcc: X-GEO-Mcc
-            Mnc: X-GEO-Mnc
-            Mobilebrand: X-GEO-Mobilebrand
-            Elevation: X-GEO-Elevation
-            Usagetype: X-GEO-Usagetype
+            #Netspeed: X-GEO-Netspeed
+            #Iddcode: X-GEO-Iddcode
+            #Areacode: X-GEO-Areacode
 
     traefik-container-manager:
       plugin:
