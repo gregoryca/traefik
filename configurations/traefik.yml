@@ -1,7 +1,7 @@
 # (Optional) Log information
 # ---
 log:
-  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: WARNING  # DEBUG, INFO, WARNING, ERROR, CRITICAL
   format: json  # common, json, logfmt
   filePath: /var/log/traefik/traefik.log
 
@@ -15,6 +15,7 @@ accessLog:
     statusCodes:
       - "200"
       - "300-302"
+      - "401-403-404-405-406"
   fields:
     defaultMode: drop
     names:
@@ -51,32 +52,19 @@ tracing:
 
 experimental:
   http3: true
-  hub: true
 
   plugins:
     real-ip:
       moduleName: github.com/Paxxs/traefik-get-real-ip
       version: v1.0.2
 
-    redirect2https:
-      moduleName: "github.com/sunalwaysknows/redirect2https"
-      version: "v0.0.7"
-
-    traefik-container-manager:
-      moduleName: github.com/adyanth/traefik-container-manager
-      version: "v0.1.2"
-
-    fail2ban:
-      moduleName: "github.com/tomMoulard/fail2ban"
-      version: "v0.6.6"
+    traefik-plugin-geoblock:
+      moduleName: "github.com/kucjac/traefik-plugin-geoblock"
+      version: "v0.2.4"
 
     ip2location:
       modulename: github.com/negasus/traefik-plugin-ip2location
       version: v0.1.0
-
-hub:
-  tls:
-    insecure: true
 
 metrics:
   prometheus:
@@ -89,9 +77,6 @@ metrics:
       - 0.3
       - 1.2
       - 5.0
-
-pilot:
-    token: "df6405a1-8d44-4daf-a007-341aa72afecd"
 
 # Entry Points configuration
 # ---
@@ -129,9 +114,6 @@ entryPoints:
   metrics:
     address: ":8082"
 
-  traefikhub-api: 
-    address: ":9900"
-
 # Certificates configuration
 # ---
 # TODO: Custmoize your Cert Resolvers and Domain settings
@@ -144,13 +126,6 @@ certificatesResolvers:
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
         entryPoint: web
-
-  dnsChallenge:
-    acme:
-      email: aquiles.craane@gmail.com  # TODO: Change this to your email
-      storage: /ssl-certs/production.json
-      dnschallenge:
-        provider: bindman
 
 # Provider Configuration
 # ---

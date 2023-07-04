@@ -1,29 +1,6 @@
 version: "3.3"
 
 services:
-  #####################
-  # Traefik Hub-Agent #
-  #####################
-  hub-agent:
-    image: ghcr.io/traefik/hub-agent-traefik:v1.1.0
-    pull_policy: always
-    container_name: hub-agent
-    restart: "on-failure"
-    command:
-      - run
-      - --hub.token=${token}
-      - --auth-server.advertise-url=http://hub-agent
-      - --traefik.host=traefik.rproxy
-      - --traefik.tls.insecure=true
-      - --hub.url=https://platform.hub.traefik.io/agent
-      - --hub.ui.url=https://hub.traefik.io
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - web-secure
-    depends_on:
-      - traefik.rproxy
-
   #########################
   # Traefik reverse proxy #
   #########################
@@ -39,8 +16,7 @@ services:
       - "80:80" # Web
       - "443:443" # Web-Secure
       - "853:853" #DNS over TLS
-    environment:
-      - BINDMAN_MANAGER_ADDRESS=bindman.listener
+
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
     ###############################################################

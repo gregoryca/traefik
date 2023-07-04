@@ -10,8 +10,90 @@ http:
         - web-secure
       middlewares:
         - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    uptime-secure:
+      service: uptime
+      rule: Host(`uptime.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    authelia-secure:
+      service: authelia
+      rule: Host(`auth.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    portainer-secure:
+      service: portainer
+      rule: Host(`portainer.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    grafana-secure:
+      service: grafana
+      rule: Host(`grafana.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    guacamole-secure:
+      service: guacamole
+      rule: Host(`guacamole.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
         - authelia-secure@docker
         - IP2Location@file
+      tls:
+        certResolver: production
+
+    dashboard-secure:
+      service: dashboard
+      rule: Host(`dashboard.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - authelia-secure@docker
+        - IP2Location@file
+      tls:
+        certResolver: production
+
+    nextcloud-secure:
+      service: nextcloud
+      rule: Host(`cloud.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - nextcloud@docker
+        - nextcloud_redirect@docker
+        - nextcloud_redirect1@docker
+        - nextcloud_redirect2@docker
       tls:
         certResolver: production
 
@@ -21,61 +103,35 @@ http:
       entryPoints:
         - web-secure
       middlewares:
-        - authelia-secure@docker
-        - IP2Location@file
         - real-ip-foo@file
-      tls:
-        certResolver: production
-
-    prometheus-dashboard:
-      service: prometheus
-      rule: Host(`prometheus.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - authelia-secure@docker
         - IP2Location@file
       tls:
         certResolver: production
 
-    cadvisor:
-      service: cadvisor
-      rule: Host(`cadvisor.apex-migrations.net`)
-      middlewares:
-        - authelia-secure@docker 
-        - IP2Location@file
-      entryPoints:
-        - web-secure
-      tls:
-        certResolver: production
+    # prometheus-dashboard:
+    #   service: prometheus@internal
+    #   rule: Host(`prometheus.apex-migrations.net`)
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - real-ip-foo@file
+    #   tls:
+    #     certResolver: production
+
+    # cadvisor:
+    #   service: cadvisor
+    #   rule: Host(`cadvisor.apex-migrations.net`)
+    #   middlewares:
+    #     - real-ip-foo@file
+    #   entryPoints:
+    #     - web-secure
+    #   tls:
+    #     certResolver: production
 
 ####################
 # HTTP Middlewares #
 ####################
   middlewares:
-    real-ip-foo:
-      plugin:
-        real-ip:
-          Proxy:
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: mf-fun
-              realIP: X-Forwarded-For
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: mf-bar
-              realIP: Client-Ip
-              OverwriteXFF: true # default: false, v1.0.2 or above
-            - proxyHeadername: X-From-Cdn
-              proxyHeadervalue: cf-foo
-              realIP: Cf-Connecting-Ip
-              OverwriteXFF: true # default: false, v1.0.2 or above
-            - proxyHeadername: "*"
-              realIP: RemoteAddr
-
-    my-redirect2https:
-      plugin:
-        redirect2https:
-            permanent: "true"
-
     IP2Location:
       plugin:
         ip2location:
@@ -97,52 +153,28 @@ http:
             #Iddcode: X-GEO-Iddcode
             #Areacode: X-GEO-Areacode
 
-    traefik-container-manager:
+    real-ip-foo:
       plugin:
-        traefik-container-manager:
-            name: ansible-ui
-            serviceUrl: https://ansible.apex-migrations.net
-            timeout: "60"
+        real-ip:
+          Proxy:
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: mf-fun
+              realIP: X-Forwarded-For
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: mf-bar
+              realIP: Client-Ip
+              OverwriteXFF: true # default: false, v1.0.2 or above
+            - proxyHeadername: X-From-Cdn
+              proxyHeadervalue: cf-foo
+              realIP: Cf-Connecting-Ip
+              OverwriteXFF: true # default: false, v1.0.2 or above
+            - proxyHeadername: "*"
+              realIP: RemoteAddr
 
-    fail2ban:
-      plugin:
-          fail2ban:
-              logLevel: "INFO"
-              blacklist:
-                ip:
-                    - 192.168.0.0/24
-              rules:
-                  action: ""
-                  actionAbuseipdb: ""
-                  backend: ""
-                  banaction: ""
-                  banactionAllports: ""
-                  bantime: 3h
-                  chain: ""
-                  destemail: "aquiles.craane@gmail.com"
-                  enabled: "true"
-                  fail2banAgent: ""
-                  filter: ""
-                  findtime: 10m
-                  ignorecommand: ""
-                  logencoding: UTF-8
-                  maxretry: "4"
-                  mode: ""
-                  mta: ""
-                  ports: 0:8000
-                  protocol: ""
-                  sender: ""
-                  urlregexp: ""
-                  usedns: "192.168.2.100"
-              whitelist:
-                ip:
-                  - ::1
-                  - 127.0.0.1
-                  - "127.0.0.1/32"
-                  - "192.168.2.100/16"
-                  - "172.21.0.0/16"
-                  - "77.173.242.71"
-                  - "143.178.33.85"
+    my-traefik-plugin-geoblock:
+            plugin:
+                traefik-plugin-geoblock:
+                    enabled: "true"
 
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #
@@ -174,7 +206,49 @@ http:
         servers:
           - url: http://grafana.cadvisor:8080
         passHostHeader: false
-          
+
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: http://nextcloud:80
+        passHostHeader: true
+
+    authelia:
+      loadBalancer:
+        servers:
+          - url: http://authelia:9091
+        passHostHeader: false
+
+    dashboard:
+      loadBalancer:
+        servers:
+          - url: http://heimdall.dashboard:80
+        passHostHeader: false
+
+    guacamole:
+      loadBalancer:
+        servers:
+          - url: http://guacamole:8080
+        passHostHeader: false
+
+    grafana:
+      loadBalancer:
+        servers:
+          - url: http://grafana:3000
+        passHostHeader: true
+
+    portainer:
+      loadBalancer:
+        servers:
+          - url: http://portainer.containers:9000
+        passHostHeader: false
+
+    uptime:
+      loadBalancer:
+        servers:
+          - url: http://uptime-kuma:3001
+        passHostHeader: false
+
 ####################################
 # TLS options and cypher specified #
 ####################################
