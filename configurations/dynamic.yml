@@ -120,7 +120,7 @@ http:
         - nextcloud_redirect@docker
         - nextcloud_redirect1@docker
         - nextcloud_redirect2@docker
-        - testHeaders@file
+        - requestHeader@file
       tls:
         certResolver: production
 
@@ -167,7 +167,7 @@ http:
 # HTTP Middlewares #
 ####################
   middlewares:
-    testHeaders:
+    requestHeader:
       plugin:
         checkheadersplugin:
           headers:
