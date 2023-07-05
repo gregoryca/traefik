@@ -15,6 +15,17 @@ http:
       tls:
         certResolver: production
 
+    ittools-secure:
+      service: ittools
+      rule: Host(`ittools.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+      tls:
+        certResolver: production
+
     uptime-secure:
       service: uptime
       rule: Host(`uptime.apex-migrations.net`)
@@ -249,6 +260,12 @@ http:
       loadBalancer:
         servers:
           - url: http://uptime-kuma:3001
+        passHostHeader: false
+
+    ittools:
+      loadBalancer:
+        servers:
+          - url: http://dev.tools:80
         passHostHeader: false
 
 ####################################
