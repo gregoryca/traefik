@@ -15,6 +15,18 @@ http:
       tls:
         certResolver: production
 
+    semaphore-secure:
+      service: semaphore
+      rule: Host(`ansible.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - authelia-secure@docker
+      tls:
+        certResolver: production
+
     ittools-secure:
       service: ittools
       rule: Host(`ittools.apex-migrations.net`)
@@ -266,6 +278,12 @@ http:
       loadBalancer:
         servers:
           - url: http://dev.tools:80
+        passHostHeader: false
+
+    semaphore:
+      loadBalancer:
+        servers:
+          - url: http://semaphore.dashboard:3000
         passHostHeader: false
 
 ####################################
