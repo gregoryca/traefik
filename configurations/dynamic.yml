@@ -120,6 +120,7 @@ http:
         - nextcloud_redirect@docker
         - nextcloud_redirect1@docker
         - nextcloud_redirect2@docker
+        - testHeaders@file
       tls:
         certResolver: production
 
@@ -166,12 +167,16 @@ http:
 # HTTP Middlewares #
 ####################
   middlewares:
-    testHeader:
-      headers:
-        customRequestHeaders:
-          X-Request-ID: "test_request"
-        customResponseHeaders:
-          X-Custom-Response-Header: "it worked"
+    testHeaders:
+      plugin:
+        checkheadersplugin:
+          headers:
+            - header:
+              name: X-Request-ID
+              matchtype: one
+              required: "false"
+              values: 
+                - "X-Request-ID"
 
     IP2Location:
       plugin:

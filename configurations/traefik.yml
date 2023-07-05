@@ -66,6 +66,10 @@ experimental:
       modulename: github.com/negasus/traefik-plugin-ip2location
       version: v0.1.0
 
+    checkheadersplugin:
+      moduleName: "github.com/dkijkuit/checkheadersplugin"
+      version: "v0.2.6"
+
 metrics:
   prometheus:
     entryPoint: metrics
