@@ -200,10 +200,44 @@ http:
             - proxyHeadername: "*"
               realIP: RemoteAddr
 
-    my-traefik-plugin-geoblock:
-            plugin:
-                traefik-plugin-geoblock:
-                    enabled: "true"
+    fail2ban:
+      plugin:
+          fail2ban:
+              logLevel: "INFO"
+              blacklist:
+                ip:
+                    - 192.168.0.0/24
+              rules:
+                  action: ""
+                  actionAbuseipdb: ""
+                  backend: ""
+                  banaction: ""
+                  banactionAllports: ""
+                  bantime: 3h
+                  chain: ""
+                  destemail: "aquiles.craane@gmail.com"
+                  enabled: "true"
+                  fail2banAgent: ""
+                  filter: ""
+                  findtime: 10m
+                  ignorecommand: ""
+                  logencoding: UTF-8
+                  maxretry: "4"
+                  mode: ""
+                  mta: ""
+                  ports: 0:8000
+                  protocol: ""
+                  sender: ""
+                  urlregexp: ""
+                  usedns: "192.168.2.100"
+              whitelist:
+                ip:
+                  - ::1
+                  - 127.0.0.1
+                  - "127.0.0.1/32"
+                  - "192.168.2.100/16"
+                  - "172.21.0.0/16"
+                  - "77.173.242.71"
 
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #

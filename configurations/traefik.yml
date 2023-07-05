@@ -58,9 +58,9 @@ experimental:
       moduleName: github.com/Paxxs/traefik-get-real-ip
       version: v1.0.2
 
-    traefik-plugin-geoblock:
-      moduleName: "github.com/kucjac/traefik-plugin-geoblock"
-      version: "v0.2.4"
+    fail2ban:
+      moduleName: "github.com/tomMoulard/fail2ban"
+      version: "v0.6.6"
 
     ip2location:
       modulename: github.com/negasus/traefik-plugin-ip2location
