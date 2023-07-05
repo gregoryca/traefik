@@ -133,25 +133,29 @@ http:
       tls:
         certResolver: production
 
-    # prometheus-dashboard:
-    #   service: prometheus@internal
-    #   rule: Host(`prometheus.apex-migrations.net`)
-    #   entryPoints:
-    #     - web-secure
-    #   middlewares:
-    #     - real-ip-foo@file
-    #   tls:
-    #     certResolver: production
+    prometheus-dashboard:
+      service: prometheus@internal
+      rule: Host(`prometheus.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - authelia-secure@docker
+      tls:
+        certResolver: production
 
-    # cadvisor:
-    #   service: cadvisor
-    #   rule: Host(`cadvisor.apex-migrations.net`)
-    #   middlewares:
-    #     - real-ip-foo@file
-    #   entryPoints:
-    #     - web-secure
-    #   tls:
-    #     certResolver: production
+    cadvisor:
+      service: cadvisor
+      rule: Host(`cadvisor.apex-migrations.net`)
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - authelia-secure@docker
+      entryPoints:
+        - web-secure
+      tls:
+        certResolver: production
 
 ####################
 # HTTP Middlewares #
