@@ -12,6 +12,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - authelia-secure@docker
+        - fail2ban@file
       tls:
         certResolver: production
 
@@ -91,6 +92,7 @@ http:
         - real-ip-foo@file
         - authelia-secure@docker
         - IP2Location@file
+        - fail2ban@file
       tls:
         certResolver: production
 
@@ -130,6 +132,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - authelia-secure@docker
+        - fail2ban@file
       tls:
         certResolver: production
 
@@ -142,6 +145,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - authelia-secure@docker
+        - fail2ban@file
       tls:
         certResolver: production
 
@@ -152,6 +156,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - authelia-secure@docker
+        - fail2ban@file
       entryPoints:
         - web-secure
       tls:
