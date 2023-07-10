@@ -17,6 +17,21 @@ http:
       tls:
         certResolver: production
 
+    localai-secure:
+      service: localai
+      rule: Host(`ai.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+        - web
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - authelia-secure@docker
+        - fail2ban@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
     semaphore-secure:
       service: semaphore
       rule: Host(`ansible.apex-migrations.net`)
@@ -353,6 +368,12 @@ http:
         servers:
           - url: http://semaphore.dashboard:3000
         passHostHeader: false
+
+    localai:
+      loadBalancer:
+        servers:
+          - url: http://local.ai:8080
+        passHostHeader: true
 
 ####################################
 # TLS options and cypher specified #
