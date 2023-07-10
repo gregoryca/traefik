@@ -26,7 +26,6 @@ http:
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        - authelia-secure@docker
         - fail2ban@file
         - requestHeader@file
       tls:
