@@ -22,7 +22,6 @@ http:
       rule: Host(`ai.apex-migrations.net`)
       entryPoints:
         - web-secure
-        - web
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
