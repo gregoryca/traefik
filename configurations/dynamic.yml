@@ -385,14 +385,14 @@ http:
     localai:
       loadBalancer:
         servers:
-          - url: http://local.ai:8080
+          - url: http://192.168.2.110:8080
         passHostHeader: false
 
     flowwise:
       loadBalancer:
         servers:
-          - url: http://flowise.ai:3000
-        passHostHeader: false
+          - url: http://192.168.2.110:3000
+        passHostHeader: true
 
 ####################################
 # TLS options and cypher specified #
