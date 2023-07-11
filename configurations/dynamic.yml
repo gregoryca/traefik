@@ -19,6 +19,20 @@ http:
 
     localai-secure:
       service: localai
+      rule: Host(`localai.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+        - web
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - fail2ban@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
+    flowwise-secure:
+      service: flowwise
       rule: Host(`ai.apex-migrations.net`)
       entryPoints:
         - web-secure
@@ -372,6 +386,12 @@ http:
       loadBalancer:
         servers:
           - url: http://local.ai:8080
+        passHostHeader: true
+
+    flowwise:
+      loadBalancer:
+        servers:
+          - url: http://flowise.ai:3000
         passHostHeader: true
 
 ####################################
