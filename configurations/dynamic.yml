@@ -22,6 +22,7 @@ http:
       rule: Host(`localai.apex-migrations.net`)
       entryPoints:
         - web-secure
+        - web
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
@@ -385,13 +386,13 @@ http:
       loadBalancer:
         servers:
           - url: http://local.ai:8080
-        passHostHeader: true
+        passHostHeader: false
 
     flowwise:
       loadBalancer:
         servers:
           - url: http://flowise.ai:3000
-        passHostHeader: true
+        passHostHeader: false
 
 ####################################
 # TLS options and cypher specified #
