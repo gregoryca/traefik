@@ -11,36 +11,34 @@ http:
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        - authelia-secure@docker
-        - fail2ban@file
-        - requestHeader@file
+        # - authelia-secure@docker
+        # - fail2ban@file
+        # - requestHeader@file
       tls:
         certResolver: production
 
     localai-secure:
       service: localai
-      rule: Host(`localai.apex-migrations.net`)
+      rule: Host(`ai.apex-migrations.net`)
       entryPoints:
         - web-secure
-        - web
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        - fail2ban@file
+        # - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
 
     flowwise-secure:
       service: flowwise
-      rule: Host(`ai.apex-migrations.net`)
+      rule: Host(`localai.apex-migrations.net`)
       entryPoints:
         - web-secure
-        - web
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        - fail2ban@file
+        # - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
