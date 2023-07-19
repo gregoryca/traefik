@@ -381,14 +381,14 @@ http:
     localai:
       loadBalancer:
         servers:
-          - url: http://localai.html:80
-        passHostHeader: false
+          - url: http://192.168.2.101:81
+        passHostHeader: true
 
     flowwise:
       loadBalancer:
         servers:
           - url: http://192.168.2.101:3000
-        passHostHeader: false
+        passHostHeader: true
 
 ####################################
 # TLS options and cypher specified #
