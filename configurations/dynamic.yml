@@ -25,7 +25,6 @@ http:
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        # - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
@@ -38,7 +37,6 @@ http:
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        # - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
@@ -390,7 +388,7 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.2.101:3000
-        passHostHeader: true
+        passHostHeader: false
 
 ####################################
 # TLS options and cypher specified #
