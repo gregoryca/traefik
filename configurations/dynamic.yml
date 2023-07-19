@@ -11,7 +11,6 @@ http:
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
-        # - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
@@ -31,7 +30,7 @@ http:
 
     traefik-dashboard:
       service: api@internal
-      rule: Host(`traefik-ai-srv.apex-migrations.net`)
+      rule: Host(`traefik.apex-migrations.net`)
       entryPoints:
         - web-secure
       middlewares:
@@ -137,10 +136,23 @@ http:
                   - "77.173.242.71"
                   - "143.178.33.85"
 
+# tcp:
+#   routers:
+#     front-router:
+#       rule: "HostSNI(`ai.apex-migrations.net`)"
+#       service: localai      
+#       tls:
+#         passthrough: true
+
 ###############################################################################
 # URL can be an hostname/ip of docker container, or ip address on the network #
 ###############################################################################
-  services:
+services:
+  localai:
+    loadBalancer:
+      servers:
+        - address: "192.168.2.101:80"
+
 #################            
 # HTTP services #
 #################
@@ -148,13 +160,19 @@ http:
     localai:
       loadBalancer:
         servers:
-          - url: http://localai.html:80
+          - url: http://localai.html:81
         passHostHeader: false
 
     flowwise:
       loadBalancer:
         servers:
           - url: http://flowise-ai:3000
+        passHostHeader: true
+
+    traefik:
+      loadBalancer:
+        servers:
+          - url: http://traefik.rproxy:81
         passHostHeader: true
 
 ####################################

@@ -15,7 +15,6 @@ services:
     ports:
       - "80:80" # Web
       - "443:443" # Web-Secure
-      - "853:853" #DNS over TLS
 
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
@@ -41,10 +40,13 @@ services:
 
     networks:
       - web-secure
+      - web
 
 #####################################################
 # Persisting of my docker network within this stack #
 #####################################################
 networks:
   web-secure:
+    external: true
+  web:
     external: true

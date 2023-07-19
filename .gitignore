@@ -8,3 +8,4 @@ traefik-ssl-certs/production.json
 .env
 configurations/IP2LOCATION-LITE-DB11.BIN
 configurations/IP2LOCATION-LITE-DB11.CSV
+configurations/userfile
