@@ -40,17 +40,11 @@ services:
       - "./configurations/:/etc/traefik/"
 
     networks:
-      - web
       - web-secure
-      - monitoring-stack
 
 #####################################################
 # Persisting of my docker network within this stack #
 #####################################################
 networks:
   web-secure:
-    external: true
-  web:
-    external: true
-  monitoring-stack:
     external: true

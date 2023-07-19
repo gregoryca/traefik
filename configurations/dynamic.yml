@@ -3,32 +3,18 @@ http:
 # HTTP routers #
 ################
   routers:
-    router-secure:
-      service: router
-      rule: Host(`router.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - fail2ban@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    localai-secure:
-      service: localai
-      rule: Host(`ai.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        # - fail2ban@file
-        - requestHeader@file
-      tls:
-        certResolver: production
+    # localai-secure:
+    #   service: localai
+    #   rule: Host(`ai.apex-migrations.net`)
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - real-ip-foo@file
+    #     - IP2Location@file
+    #     # - fail2ban@file
+    #     - requestHeader@file
+    #   tls:
+    #     certResolver: production
 
     flowwise-secure:
       service: flowwise
@@ -43,125 +29,9 @@ http:
       tls:
         certResolver: production
 
-    semaphore-secure:
-      service: semaphore
-      rule: Host(`ansible.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    ittools-secure:
-      service: ittools
-      rule: Host(`ittools.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    uptime-secure:
-      service: uptime
-      rule: Host(`uptime.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    authelia-secure:
-      service: authelia
-      rule: Host(`auth.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    portainer-secure:
-      service: portainer
-      rule: Host(`portainer.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    grafana-secure:
-      service: grafana
-      rule: Host(`grafana.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    guacamole-secure:
-      service: guacamole
-      rule: Host(`guacamole.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - authelia-secure@docker
-        - IP2Location@file
-        - fail2ban@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    dashboard-secure:
-      service: dashboard
-      rule: Host(`dashboard.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - authelia-secure@docker
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    nextcloud-secure:
-      service: nextcloud
-      rule: Host(`cloud.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - nextcloud@docker
-        - nextcloud_redirect@docker
-        - nextcloud_redirect1@docker
-        - nextcloud_redirect2@docker
-        - requestHeader@file
-      tls:
-        certResolver: production
-
     traefik-dashboard:
       service: api@internal
-      rule: Host(`traefik.apex-migrations.net`)
+      rule: Host(`traefik-ai-srv.apex-migrations.net`)
       entryPoints:
         - web-secure
       middlewares:
@@ -170,34 +40,6 @@ http:
         - authelia-secure@docker
         - fail2ban@file
         - requestHeader@file
-      tls:
-        certResolver: production
-
-    prometheus-dashboard:
-      service: prometheus@internal
-      rule: Host(`prometheus.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - fail2ban@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    cadvisor:
-      service: cadvisor
-      rule: Host(`cadvisor.apex-migrations.net`)
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - fail2ban@file
-        - requestHeader@file
-      entryPoints:
-        - web-secure
       tls:
         certResolver: production
 
@@ -302,94 +144,17 @@ http:
 #################            
 # HTTP services #
 #################
-    router:
-      loadBalancer:
-        servers:
-          - url: http://192.168.2.1:80
-        passHostHeader: false
-        # When sticky sessions are enabled, a Set-Cookie header is set on the initial response to let the client know which server handles the first response.
-        sticky:
-         cookie:
-            name: sticky_cookie
-            secure: true
-            httpOnly: true
-
-    prometheus:
-      loadBalancer:
-        servers:
-          - url: http://grafana.prometheus:9090
-        passHostHeader: false
-
-    cadvisor:
-      loadBalancer:
-        servers:
-          - url: http://grafana.cadvisor:8080
-        passHostHeader: false
-
-    nextcloud:
-      loadBalancer:
-        servers:
-          - url: http://nextcloud:80
-        passHostHeader: true
-
-    authelia:
-      loadBalancer:
-        servers:
-          - url: http://authelia:9091
-        passHostHeader: false
-
-    dashboard:
-      loadBalancer:
-        servers:
-          - url: http://heimdall.dashboard:80
-        passHostHeader: false
-
-    guacamole:
-      loadBalancer:
-        servers:
-          - url: http://guacamole:8080
-        passHostHeader: false
-
-    grafana:
-      loadBalancer:
-        servers:
-          - url: http://grafana:3000
-        passHostHeader: true
-
-    portainer:
-      loadBalancer:
-        servers:
-          - url: http://portainer.containers:9000
-        passHostHeader: false
-
-    uptime:
-      loadBalancer:
-        servers:
-          - url: http://uptime-kuma:3001
-        passHostHeader: false
-
-    ittools:
-      loadBalancer:
-        servers:
-          - url: http://dev.tools:80
-        passHostHeader: false
-
-    semaphore:
-      loadBalancer:
-        servers:
-          - url: http://semaphore.dashboard:3000
-        passHostHeader: false
-
-    localai:
-      loadBalancer:
-        servers:
-          - url: http://localai.html:80
-        passHostHeader: false
+  router:
+    # localai:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://local-ai:8080
+    #     passHostHeader: false
 
     flowwise:
       loadBalancer:
         servers:
-          - url: http://192.168.2.101:3000
+          - url: http://flowise-ai:3000
         passHostHeader: true
 
 ####################################
