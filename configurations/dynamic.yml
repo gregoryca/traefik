@@ -28,16 +28,15 @@ http:
       tls:
         certResolver: production
 
-    traefik-dashboard:
-      service: api@internal
-      rule: Host(`traefik.apex-migrations.net`)
+    dozzle.logs:
+      service: dozzle
+      rule: Host(`dozzle.apex-migrations.net`)
       entryPoints:
         - web-secure
       middlewares:
         - real-ip-foo@file
         - IP2Location@file
         - authelia-secure@docker
-        - fail2ban@file
         - requestHeader@file
       tls:
         certResolver: production
@@ -169,10 +168,10 @@ services:
           - url: http://flowise-ai:3000
         passHostHeader: true
 
-    traefik:
+    dozzle:
       loadBalancer:
         servers:
-          - url: http://traefik.rproxy:81
+          - url: http://dozzle.logs:8181
         passHostHeader: true
 
 ####################################
