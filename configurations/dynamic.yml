@@ -199,6 +199,19 @@ http:
       tls:
         certResolver: production
 
+    dozzle.logs:
+      service: dozzle
+      rule: Host(`dozzle.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - authelia-secure@docker
+        - requestHeader@file
+      tls:
+        certResolver: production
+
 ####################
 # HTTP Middlewares #
 ####################
@@ -382,13 +395,19 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.2.101:81
-        passHostHeader: true
+        passHostHeader: false
 
     flowwise:
       loadBalancer:
         servers:
           - url: http://192.168.2.101:3000
         passHostHeader: true
+
+    dozzle:
+      loadBalancer:
+        servers:
+          - url: http://192.168.2.101:8181
+        passHostHeader: false
 
 ####################################
 # TLS options and cypher specified #
