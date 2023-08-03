@@ -17,6 +17,18 @@ http:
       tls:
         certResolver: production
 
+    router-secure:
+      service: code-server
+      rule: Host(`code-server.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
     localai-secure:
       service: localai
       rule: Host(`ai.apex-migrations.net`)
@@ -389,6 +401,12 @@ http:
       loadBalancer:
         servers:
           - url: http://semaphore.dashboard:3000
+        passHostHeader: false
+
+    code-server:
+      loadBalancer:
+        servers:
+          - url: http://code-server:8080
         passHostHeader: false
 
     localai:
