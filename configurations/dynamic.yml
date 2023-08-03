@@ -17,7 +17,7 @@ http:
       tls:
         certResolver: production
 
-    router-secure:
+    code-secure:
       service: code-server
       rule: Host(`code-server.apex-migrations.net`)
       entryPoints:
