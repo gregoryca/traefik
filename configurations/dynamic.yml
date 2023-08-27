@@ -29,9 +29,21 @@ http:
       tls:
         certResolver: production
 
+    pwpush-referit-azure:
+      service: pwpush-referit
+      rule: Host(`pwpush.referit.nl`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
     pwpush-secure:
       service: pwpush
-      rule: Host(`pwpush.apex-migrations.net`,`pwpush.referit.nl`)
+      rule: Host(`pwpush.apex-migrations.net`)
       entryPoints:
         - web-secure
       middlewares:
@@ -421,11 +433,17 @@ http:
           - url: http://code-server:8080
         passHostHeader: false
 
-    pwpush:
+    pwpush-referit:
       loadBalancer:
         servers:
           - url: http://pwpush-terraform.westeurope.azurecontainer.io:5100
         passHostHeader: false
+
+    pwpush:
+    loadBalancer:
+      servers:
+        - url: http://pwpush:5100
+      passHostHeader: false
 
     localai:
       loadBalancer:
