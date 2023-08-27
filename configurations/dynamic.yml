@@ -424,7 +424,7 @@ http:
     pwpush:
       loadBalancer:
         servers:
-          - url: http://pwpush.westeurope.azurecontainer.io:5100
+          - url: http://pwpush-terraform.westeurope.azurecontainer.io:5100
         passHostHeader: false
 
     localai:
