@@ -29,6 +29,43 @@ http:
       tls:
         certResolver: production
 
+    cosmos.rproxy:
+      service: cosmos.rproxy
+      rule: Host(`cosmos.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+        - web
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
+    devops:
+      service: devops-site
+      rule: Host(`www.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
+    gaia-secure:
+      service: gaia
+      rule: Host(`terraform.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+      tls:
+        certResolver: production
+
     pwpush-secure:
       service: pwpush
       rule: Host(`pwpush.apex-migrations.net`)
@@ -373,6 +410,12 @@ http:
           - url: http://grafana.cadvisor:8080
         passHostHeader: false
 
+    devops-site:
+      loadBalancer:
+        servers:
+          - url: http://85.10.159.4:443
+        passHostHeader: false
+
     nextcloud:
       loadBalancer:
         servers:
@@ -461,6 +504,18 @@ http:
       loadBalancer:
         servers:
           - url: http://192.168.2.101:8181
+        passHostHeader: false
+
+    gaia:
+      loadBalancer:
+        servers:
+          - url: http://gaia:8080
+        passHostHeader: false
+
+    cosmos.rproxy:
+      loadBalancer:
+        servers:
+          - url: http://cosmos.rproxy:80
         passHostHeader: false
 
 ####################################
