@@ -29,19 +29,6 @@ http:
       tls:
         certResolver: production
 
-    cosmos.rproxy:
-      service: cosmos.rproxy
-      rule: Host(`cosmos.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-        - web
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
     devops:
       service: devops-site
       rule: Host(`www.apex-migrations.net`)
@@ -510,12 +497,6 @@ http:
       loadBalancer:
         servers:
           - url: http://gaia:8080
-        passHostHeader: false
-
-    cosmos.rproxy:
-      loadBalancer:
-        servers:
-          - url: http://cosmos.rproxy:80
         passHostHeader: false
 
 ####################################
