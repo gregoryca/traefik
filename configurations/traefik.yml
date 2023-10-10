@@ -69,6 +69,10 @@ experimental:
     checkheadersplugin:
       moduleName: "github.com/dkijkuit/checkheadersplugin"
       version: "v0.2.6"
+      
+    realip:
+      moduleName: github.com/Desuuuu/traefik-real-ip-plugin
+      version: v1.1.0
 
 metrics:
   prometheus:

@@ -276,6 +276,15 @@ http:
 # HTTP Middlewares #
 ####################
   middlewares:
+    realip:
+      plugin:
+        realip:
+          retrievers:
+            - header: X-Forwarded-For
+              depth: 1
+          headers:
+            - X-Real-IP
+
     requestHeader:
       plugin:
         checkheadersplugin:
