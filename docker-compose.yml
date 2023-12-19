@@ -16,8 +16,6 @@ services:
       - "80:80" # Web
       - "443:443" # Web-Secure
       - "853:853" #DNS over TLS
-    dns:
-      - 192.168.2.100
     ###############################################################
     # All volumes which are mounted locally to the traefik folder #
     ###############################################################
