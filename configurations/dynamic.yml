@@ -53,29 +53,17 @@ http:
       tls:
         certResolver: production
 
-    pwpush-secure:
-      service: pwpush
-      rule: Host(`pwpush.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
-
-    pwpush-referit:
-      service: pwpush-referit
-      rule: Host(`pwpush.referit.nl`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
+    # pwpush-secure:
+    #   service: pwpush
+    #   rule: Host(`pwpush.apex-migrations.net`)
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - real-ip-foo@file
+    #     - IP2Location@file
+    #     - requestHeader@file
+    #   tls:
+    #     certResolver: production
 
     localai-secure:
       service: localai
@@ -115,17 +103,17 @@ http:
       tls:
         certResolver: production
 
-    ittools-secure:
-      service: ittools
-      rule: Host(`ittools.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
+    # ittools-secure:
+    #   service: ittools
+    #   rule: Host(`ittools.apex-migrations.net`)
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - real-ip-foo@file
+    #     - IP2Location@file
+    #     - requestHeader@file
+    #   tls:
+    #     certResolver: production
 
     uptime-secure:
       service: uptime
@@ -151,17 +139,17 @@ http:
       tls:
         certResolver: production
 
-    portainer-secure:
-      service: portainer
-      rule: Host(`portainer.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
-      tls:
-        certResolver: production
+    # portainer-secure:
+    #   service: portainer
+    #   rule: Host(`portainer.apex-migrations.net`)
+    #   entryPoints:
+    #     - web-secure
+    #   middlewares:
+    #     - real-ip-foo@file
+    #     - IP2Location@file
+    #     - requestHeader@file
+    #   tls:
+    #     certResolver: production
 
     grafana-secure:
       service: grafana
@@ -443,11 +431,11 @@ http:
           - url: http://grafana:3000
         passHostHeader: true
 
-    portainer:
-      loadBalancer:
-        servers:
-          - url: http://portainer.containers:9000
-        passHostHeader: false
+    # portainer:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://portainer.containers:9000
+    #     passHostHeader: false
 
     uptime:
       loadBalancer:
@@ -455,11 +443,11 @@ http:
           - url: http://uptime-kuma:3001
         passHostHeader: false
 
-    ittools:
-      loadBalancer:
-        servers:
-          - url: http://dev.tools:80
-        passHostHeader: false
+    # ittools:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://dev.tools:80
+    #     passHostHeader: false
 
     semaphore:
       loadBalancer:
@@ -473,17 +461,11 @@ http:
           - url: http://code-server:8080
         passHostHeader: false
 
-    pwpush:
-      loadBalancer:
-        servers:
-          - url: http://pwpush:5100
-        passHostHeader: false
-
-    pwpush-referit:
-      loadBalancer:
-        servers:
-          - url: http://pwpush-terraform.westeurope.azurecontainer.io:5100
-        passHostHeader: false
+    # pwpush:
+    #   loadBalancer:
+    #     servers:
+    #       - url: http://pwpush:5100
+    #     passHostHeader: false
 
     localai:
       loadBalancer:
@@ -508,31 +490,3 @@ http:
         servers:
           - url: http://gaia:8080
         passHostHeader: false
-
-####################################
-# TLS options and cypher specified #
-####################################
-tls:
-  certificates:
-    - certFile: /traefik-ssl-certs/apex-migrations.cert
-      keyFile: /traefik-ssl-certs/apex-migrations.key
-      stores:
-        - defaultStore
-  stores:
-    defaultStore:
-      defaultGeneratedCert:
-        resolver: production
-        domain:
-          main: apex-migrations.net
-          # Still need to enable DNS challenge for wildcard domain certificates
-          # sans:
-          #     - "*.apex-migrations.net"
-  options:
-    defaultOptions:
-      minVersion: VersionTLS12
-      cipherSuites:
-        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
