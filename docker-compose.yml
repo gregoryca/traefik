@@ -37,11 +37,41 @@ services:
       # This is for my traefik static config #
       ########################################
       - "./configurations/:/etc/traefik/"
-
     networks:
       - web
       - web-secure
       - monitoring-stack
+    labels:
+      - "traefik.enable=true"
+
+      ####################################################################################
+      # this is a domain name i have pointed to my home address via no-ip.               #
+      # you can create a no-ip account, and set it up so you have an dynamic DNS address #
+      # In your domain you create a new CNAME record for your website                    #
+      # After that you point that CNAME record to the dynamic DNS record                 #
+      ####################################################################################
+      - "traefik.http.routers.traefik-secure.rule=Host(${url})"
+      ##################################################################################
+      # This is my certresolved named: production and can be found in my static config #
+      ##################################################################################
+      - "traefik.http.routers.traefik-secure.tls.certresolver=production"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      ################################
+      # Port to traefik dashboard UI #
+      ################################
+      - "traefik.http.services.traefik-secure.loadbalancer.server.port=${port}" #port to the webservice
+      #####################################################
+      # I have created a docker network named: web-secure #
+      #####################################################
+      - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
+      ###################
+      # Traefik service #
+      ###################
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+      #####################################################################################################
+      # Use this only if you have Authelia deployed in your infra, and is reachable via an docker network #
+      #####################################################################################################
+      - "traefik.http.routers.traefik-secure.middlewares=authelia-secure@docker"
 
 #####################################################
 # Persisting of my docker network within this stack #
