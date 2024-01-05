@@ -136,19 +136,6 @@ http:
       tls:
         certResolver: production
 
-    dozzle.logs:
-      service: dozzle
-      rule: Host(`dozzle.apex-migrations.net`)
-      entryPoints:
-        - web-secure
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - requestHeader@file
-      tls:
-        certResolver: production
-
 ####################
 # HTTP Middlewares #
 ####################
