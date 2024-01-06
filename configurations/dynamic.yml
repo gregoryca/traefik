@@ -220,7 +220,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: portainer.container
+          names: portainer.containers
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
