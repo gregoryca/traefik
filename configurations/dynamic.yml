@@ -48,9 +48,6 @@ http:
       entryPoints:
         - web-secure
       middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - requestHeader@file
         - sablier-portainer@file
       tls:
         certResolver: production
@@ -128,6 +125,7 @@ http:
         - authelia-secure@docker
         - IP2Location@file
         - requestHeader@file
+        - sablier-heimdall@file
       tls:
         certResolver: production
 
@@ -197,7 +195,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: gucamole
+          names: guacamole
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
@@ -221,7 +219,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: portainer.containers
+          names:  portainer.containers
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
@@ -234,6 +232,18 @@ http:
             showDetails: "true"
             theme: ghost
           names: uptime-kuma
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
+
+    sablier-heimdall:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: heimdall.dashboard
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
