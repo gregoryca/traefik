@@ -17,6 +17,14 @@ http:
       tls:
         certResolver: production
 
+    pwpush:
+      rule: PathPrefix(`/pwpush`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - sablier-pwpush@file
+      service: "pwpush"
+
     code-secure:
       service: code-server
       rule: Host(`code-server.apex-migrations.net`)
@@ -140,6 +148,18 @@ http:
 # HTTP Middlewares #
 ####################
   middlewares:
+    sablier-pwpush:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> CONTAINERS <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: pwpush
+          sablierUrl: http://sablier:10000
+          sessionDuration: 1h
+
     realip:
       plugin:
         realip:
@@ -257,6 +277,11 @@ http:
             name: sticky_cookie
             secure: true
             httpOnly: true
+
+    pwpush:
+      loadBalancer:
+        servers:
+          - url: "http://pwpush:5100"
 
     prometheus:
       loadBalancer:

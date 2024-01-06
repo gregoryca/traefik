@@ -54,6 +54,10 @@ experimental:
   http3: true
 
   plugins:
+    sablier:
+      moduleName: "github.com/acouvreur/sablier"
+      version: "v1.2.0"
+
     real-ip:
       moduleName: github.com/Paxxs/traefik-get-real-ip
       version: v1.0.2
