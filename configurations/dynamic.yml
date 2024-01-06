@@ -114,6 +114,7 @@ http:
         - web-secure
       middlewares:
         - sablier-it-tools@file
+        - authelia-secure@docker
       tls:
         certResolver: production
 
@@ -208,7 +209,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: it-tools
+          names: dev.tools
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
