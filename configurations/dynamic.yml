@@ -17,13 +17,17 @@ http:
       tls:
         certResolver: production
 
-    pwpush:
-      rule: PathPrefix(`/pwpush`)
+    ## created a second router for pwpush for sablier
+    ## primary router is defined as a label
+    pwpush: 
+      service: "pwpush"
+      rule: "Host(`pwpush.apex-migrations.net`)"
       entryPoints:
         - web-secure
       middlewares:
         - sablier-pwpush@file
-      service: "pwpush"
+      tls:
+        certResolver: production
 
     code-secure:
       service: code-server
@@ -34,6 +38,20 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - requestHeader@file
+        - sablier-code-server@file
+      tls:
+        certResolver: production
+
+    portainer-secure:
+      service: code-server
+      rule: Host(`portainer.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - real-ip-foo@file
+        - IP2Location@file
+        - requestHeader@file
+        - sablier-code-server@file
       tls:
         certResolver: production
 
@@ -46,6 +64,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - requestHeader@file
+        - sablier-uptime-kuma@file
       tls:
         certResolver: production
 
@@ -84,6 +103,17 @@ http:
         - IP2Location@file
         - fail2ban@file
         - requestHeader@file
+        - sablier-gaucamole@file
+      tls:
+        certResolver: production
+
+    it-tools-secure:
+      service: it-tools
+      rule: Host(`ittools.apex-migrations.net`)
+      entryPoints:
+        - web-secure
+      middlewares:
+        - sablier-it-tools@file
       tls:
         certResolver: production
 
@@ -152,13 +182,73 @@ http:
       plugin:
         sablier:
           dynamic:
-            displayName: (>*-*)> CONTAINERS <(*-*<)
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
           names: pwpush
           sablierUrl: http://sablier:10000
-          sessionDuration: 1h
+          sessionDuration: 1m
+
+    sablier-code-server:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: code-server
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
+
+    sablier-gaucamole:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: gucamole
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
+
+    sablier-it-tools:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: it-tools
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
+
+    sablier-portainer:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: portainer
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
+
+    sablier-uptime-kuma:
+      plugin:
+        sablier:
+          dynamic:
+            displayName: (>*-*)> STARTING CONTAINER <(*-*<)
+            refreshFrequency: 10s
+            showDetails: "true"
+            theme: ghost
+          names: uptime-kuma
+          sablierUrl: http://sablier:10000
+          sessionDuration: 15m
 
     realip:
       plugin:
@@ -282,6 +372,11 @@ http:
       loadBalancer:
         servers:
           - url: "http://pwpush:5100"
+
+    it-tools:
+      loadBalancer:
+        servers:
+          - url: "http://dev.tools:80"
 
     prometheus:
       loadBalancer:
