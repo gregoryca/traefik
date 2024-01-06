@@ -43,7 +43,7 @@ http:
         certResolver: production
 
     portainer-secure:
-      service: code-server
+      service: portainer
       rule: Host(`portainer.apex-migrations.net`)
       entryPoints:
         - web-secure
@@ -51,7 +51,7 @@ http:
         - real-ip-foo@file
         - IP2Location@file
         - requestHeader@file
-        - sablier-code-server@file
+        - sablier-portainer@file
       tls:
         certResolver: production
 
@@ -160,20 +160,6 @@ http:
       tls:
         certResolver: production
 
-    cadvisor:
-      service: cadvisor
-      rule: Host(`cadvisor.apex-migrations.net`)
-      middlewares:
-        - real-ip-foo@file
-        - IP2Location@file
-        - authelia-secure@docker
-        - fail2ban@file
-        - requestHeader@file
-      entryPoints:
-        - web-secure
-      tls:
-        certResolver: production
-
 ####################
 # HTTP Middlewares #
 ####################
@@ -186,7 +172,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: pwpush
+          names: pwpush, pwpush.db
           sablierUrl: http://sablier:10000
           sessionDuration: 1m
 
@@ -234,7 +220,7 @@ http:
             refreshFrequency: 10s
             showDetails: "true"
             theme: ghost
-          names: portainer
+          names: portainer.container
           sablierUrl: http://sablier:10000
           sessionDuration: 15m
 
@@ -430,4 +416,10 @@ http:
       loadBalancer:
         servers:
           - url: http://code-server:8080
+        passHostHeader: false
+
+    portainer:
+      loadBalancer:
+        servers:
+          - url: http://portainer.containers:9000
         passHostHeader: false
